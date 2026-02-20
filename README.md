@@ -1,227 +1,288 @@
-# 🤖 零基础入门具身智能 🛠️
+- 
 
-中文 | [English](./README.en.md)
+- <div align="center">
+    <img src="assets/main.png" width="100%" alt="Banner" />
 
-<div align="center">
-  <img src="./assets/main1.png" alt="AI硬件与机器人技术" width="800"/>
 
-<p>
-    <strong>一站式学习具身智能的开源教程库</strong>
+  <pre style="font-family: 'Courier New', monospace; font-size: 16px; color: #000000; margin: 0; padding: 0; line-height: 1.2; transform: skew(-1deg, 0deg); display: block;">
+  ███████╗███╗   ███╗██████╗  ██████╗ ██████╗ ██╗███████╗██████╗ 
+  ██╔════╝████╗ ████║██╔══██╗██╔═══██╗██╔══██╗██║██╔════╝██╔══██╗
+  █████╗  ██╔████╔██║██████╔╝██║   ██║██║  ██║██║█████╗  ██║  ██║
+  ██╔══╝  ██║╚██╔╝██║██╔══██╗██║   ██║██║  ██║██║██╔══╝  ██║  ██║
+  ███████╗██║ ╚═╝ ██║██████╔╝╚██████╔╝██████╔╝██║███████╗██████╔╝
+  ╚══════╝╚═╝     ╚═╝╚═════╝  ╚═════╝ ╚═════╝ ╚═╝╚══════╝╚═════╝ 
+  </pre>
+
+  # Every-Embodied : Zero to Hero in Embodied AI
+
+  <p align="center">
+    📌 <a href="https://datawhaler.feishu.cn/wiki/ANwTwcmK1iydqZkBrpRcia3nnlf">在线阅读 (Read Online)</a> · ✨ <a href="#-学习地图">学习地图 (Learning Map)</a> · 🤖 <a href="#-最新亮点">前沿复现 (SOTA)</a>
   </p>
 
+  <p align="center">
+      <a href="https://github.com/datawhalechina/every-embodied/stargazers" target="_blank">
+          <img src="https://img.shields.io/github/stars/datawhalechina/every-embodied?color=0052cc&style=for-the-badge&logo=star&logoColor=white&labelColor=1a1a2e" alt="Stars"></a>
+      <a href="https://github.com/datawhalechina/every-embodied/network/members" target="_blank">
+          <img src="https://img.shields.io/github/forks/datawhalechina/every-embodied?color=0052cc&style=for-the-badge&logo=git-fork&logoColor=white&labelColor=1a1a2e" alt="Forks"></a>
+      <a href="LICENSE" target="_blank">
+          <img src="https://img.shields.io/badge/License-CC--BY%204.0-4ecdc4?style=for-the-badge&logo=creative-commons&logoColor=white&labelColor=1a1a2e" alt="License"></a>
+  </p>
+
+  <p align="center">
+    <a href="./README.md"><img alt="简体中文" src="https://img.shields.io/badge/简体中文-d9d9d9"></a>
+    <a href="./README.en.md"><img alt="English" src="https://img.shields.io/badge/English-d9d9d9"></a>
+  </p>
+  <div align="center">
+    <p><strong>Supported By</strong></p>
+    <img src="./assets/logo.drobo.svg" height="40" style="margin: 0 10px;"> 
+    <img src="./assets/zhiyuan.png" height="40" style="margin: 0 10px;"> 
+    <img src="./assets/hugging-face.png" height="40" style="margin: 0 10px;"> 
+    <img src="./assets/shanghaiailab.webp" height="40" style="margin: 0 10px;"> 
+  </div>
+
+  </div>
+
+  
+
+  
+
+  ## 🚀 快速开始 (Quick Start) ：一分钟体验 Hello Every-Embodied
+
+  想要立刻在本地跑通第一个具身智能仿真 Demo？只需三步：
+
+  ```bash
+  # 1. 克隆仓库
+  git clone https://github.com/datawhalechina/every-embodied.git
+  cd every-embodied
+  
+  # 2. 创建并激活 Conda 环境
+  conda create -n embodied python=3.8
+  conda activate embodied
+  
+  # 3. 安装依赖并运行基础机械臂抓取 Demo
+  pip install mujoco
+  # 可选：更平滑的 jerk 限制轨迹规划
+  pip install ruckig
+  python examples/01_hello_every_embodied_mujoco.py
+  ```
+  详细说明请见：`examples/README.md`
 
 
-</div>
+  <br>
 
-<div align="center">
-  <img src="./assets/logo.drobo.svg" title="" alt="logo" width="296"> 
-</div>
-<div align="center">
-  <img src="./assets/zhiyuan.png" title="" alt="logo" width="296"> 
-</div>
-<div align="center">
-  <img src="./assets/hugging-face.png" title="" alt="logo" width="296"> 
-</div>
+<table align="center">
+  <tr>
+    <td width="33%" valign="top" align="center">
+      <img src="assets/quick_start.gif" width="100%">
+      <br>
+      <strong><a href="./examples/README.md">项目快速入门</a></strong>
+      <br>
+      <sub>基于mujoco一键了解项目基础</sub>
+    </td>
+    <td width="33%" valign="top" align="center">
+      <img src="assets/zhiyuan.gif" width="100%">
+      <br>
+      <strong><a href="./10-具身智能其他仿真工具及仿真前沿/08GenieSim3配置.md">Genie Sim的Pi0部署</a></strong>
+      <br>
+      <sub>基于Pi0和Isaac Sim实现高保真仿真</sub>
+    </td>
+    <td width="33%" valign="top" align="center">
+      <img src="assets/2025-07-02-20-50-54-image.png" width="100%">
+      <br>
+        <strong><a href="./03-机器人硬件、lerobot及地瓜RDK-X5开发板控制教程/03RDK-X5连接lerobot机械臂进行遥操作.md">LeRobot 遥操作</a></strong>
+      <br>
+      <sub>支持地瓜 RDK-X5 连接 SO101 机械臂实操</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="33%" valign="top" align="center">
+      <img src="assets/2025-06-17-12-11-28-image.png" width="100%">
+      <br>
+        <strong><a href="./04-具身场景的计算机视觉、3D重建/01-sam和深度估计.md">视觉语义感知</a></strong>
+      <br>
+      <sub>场景分割与目标检测，让机器人“看懂”环境</sub>
+    </td>
+    <td width="33%" valign="top" align="center">
+      <img src="assets/plane.gif" width="100%">
+      <br>
+        <strong><a href="./13-其他前沿项目复现/无人机大模型+Groundingdino实践/无人机多模态大模型.md">LLM控制无人机导航VLN</a></strong>
+      <br>
+      <sub>通过WebUI快速上手无人机大模型VLN导航</sub>
+    </td>
+    <td width="33%" valign="top" align="center">
+      <img src="assets/libero.gif" width="100%">
+      <br>
+      <strong><a href="./06-策略抓取或抓取VLA/大模型控制、VLA、VLM/01SmolVLA-LIBERO/01SmolVLA-libero.md">基于SmolVLA微调LIBERO基准</a></strong>
+      <br>
+      <sub>小型VLA测试机器人终身学习基准</sub>
+    </td>
+  </tr>
+</table>
 
-## 📖 项目简介
 
-本仓库编写了具身智能相关的教程资料，涵盖机器人仿真环境配置、控制算法实现、硬件开发、手眼协调等多个方面。适合具身智能初学者和研究人员学习参考。
+  <div align="center">
+    <h3>⭐ 欢迎 <a href="https://github.com/datawhalechina/every-embodied" style="color: #0052cc;">点击此处 Star</a> 共同构建具身智能开源生态 ❤️</h3>
+  </div>
+  具身智能（Embodied AI）是通往通用人工智能（AGI）的关键钥匙。
+  **Every-Embodied 致力于打造一个“基础友好、工程可复现、前沿可拓展”的学习库。**
+  我们希望降低门槛：即使你目前只有 Python 基础，也可以从仿真和最小可运行 Demo 出发，逐步完成从“看懂”到“动手复现”的跨越。
 
-💡 **为什么选择本教程？**
+  - **入门友好**：优先提供可运行示例与环境脚本，不要求你一开始就掌握复杂机器人学推导
+  - **实践导向**：强调“跑起来-看结果-再理解原理”的学习路径，减少抽象概念带来的挫败感
+  - **前沿连接**：从 MuJoCo / Isaac Sim 到 VLA / VLN，让学习路径与产业热点保持同步
 
-- 📚 内容全面：从基础到进阶，系统化学习路径
-- 🔧 实用导向：包含大量实际代码示例和应用案例
-- 🌐 持续更新：跟踪最新技术发展和应用趋势
-- 👨‍👩‍👧‍👦 社区支持：提供交流和问题解答平台
+## 👥 项目受众
 
-**Related Open-source Projects｜相关开源项目**
+这个项目不仅面向机器人专业背景同学，也欢迎更多跨领域学习者加入：
 
-具身智能技术指南：[Embodied-AI-Guide](https://github.com/TianxingChen/Embodied-AI-Guide)
+- **Python 初学者 / 转型开发者**：有基础编程能力，希望系统进入 AI+机器人、具身智能方向
+- **高校学生 / 研究生**：希望通过课程项目、毕业设计或论文复现快速建立具身智能实践能力
+- **算法工程师**：希望把视觉、强化学习、大模型能力迁移到真实物理交互场景
+- **硬件与机器人爱好者**：希望理解从硬件控制、仿真验证到 Sim2Real 部署的完整链路
+- **教育工作者与社区组织者**：希望基于开源教程组织课程、读书会、训练营和项目共创
 
-## ✨ 最新亮点
+---
 
-### 🍳 智能家务助手
+  本教程分为三个阶段，带你逐层深入具身智能的世界：
 
-我们新增的家务机器人模块可实现多项厨房任务，包括：
+| 阶段         | 核心技能                            | 产出                                                         |
+| :----------- | :---------------------------------- | :----------------------------------------------------------- |
+| **第一阶段** | 机器人学基础、硬件选型、ROS 入门    | 搭建自己的第一台仿真机器人 / 配置仿真环境                    |
+| **第二阶段** | 计算机视觉、运动规划、强化学习      | 完成“识别-规划-抓取”闭环任务                                 |
+| **第三阶段** | 模仿学习、大模型(VLA/VLN)、Sim2Real | 复现大模型导航VLN、OpenVLA、SmolVLA 等前沿项目，实现仿真或真实部署 |
 
-- 物体识别与抓取（蔬菜、水果、厨具等）
+  ## 🔥 News & Highlights
 
-  <!-- - 🔪 基础烹饪操作（切菜、搅拌、翻炒） -->
-- 环境清理与整理（详细教程待实现）
+  - **[2025-02-16]** 新增GenieSim一键启动镜像和视频教程
+  - **[2025-01-15]** 新增Habitat导航实战一键启动镜像和视频教程及大模型导航实战VLN教程
 
-### 🧠 强化学习框架
+  <details>
+  <summary>Past News</summary>
 
-全新的强化学习模块支持：
+  - **[2025-07-02]** 新增 **地瓜 RDK-X5** 连接 LeRobot SO101 遥操作实战教程。
+  - **[2025-06-25]** 发布 **OpenVLA** 及 OmniGibson 仿真环境深度指南。
+  - **[2025-03-31]** 推出 **具身场景的计算机视觉** 模块，支持物体识别与复杂抓取。
+  - **[2025-01-01]** 项目初始化，发布具身智能基础路线图。
+    </details>
 
-- 多种算法实现（PPO、SAC、TD3等）
-- 从模仿到强化的混合学习
-- 性能评估与可视化工具
+  
 
-<div align="center">
-  <table>
-    <tr>
-      <td><img src="assets/2025-03-31-23-41-12-image.png" alt="机械臂光影渲染" width="260"/></td>
-      <td><img src="assets/2025-03-31-23-41-30-image.png" alt="取咖啡" width="260"/></td>
-      <td><img src="assets/2025-03-31-23-41-43-image.png" alt="室内高斯泼溅" width="260"/></td>
-    </tr>
-    <tr>
-      <td>机械臂光影渲染</td>
-      <td>取咖啡</td>
-      <td>室内高斯泼溅</td>
-    </tr>
-    <tr>
-      <td><img src="assets/2025-06-17-12-11-28-image.png" alt="机械臂光影渲染" width="260"/></td>
-      <td><img src="assets/2025-06-17-12-12-43-f0e46ab84c2c32c78c209598d5ece28.png" alt="取咖啡" width="260"/></td>
-      <td><img src="assets/2025-06-17-12-13-06-927cc0812a248f6da977b0194dae21b.png" alt="室内高斯泼溅" width="260"/></td>
-    </tr>
-    <tr>
-      <td>室内场景分割</td>
-      <td>机械臂香蕉抓取</td>
-      <td>抓取注意力可视化</td>
-    </tr>
-        <tr>
-      <td><img src="assets/2025-06-25-11-32-56-image.png" alt="机械臂光影渲染" width="260"/></td>
-      <td><img src="assets/2025-06-25-12-18-21-1750825085788.png" alt="取咖啡" width="260"/></td>
-      <td><img src="assets/2025-07-01-21-26-54-image.png" alt="室内高斯泼溅" width="260"/></td>
-    </tr>
-    <tr>
-      <td>robotwin1.0复现</td>
-      <td>Lerobot仿真支持</td>
-      <td>OmniGibson</td>
-    </tr>
-    </tr>
-        <tr>
-      <td><img src="assets/2025-07-01-21-28-31-c0aa64a33a6b993eaa96a9743d35b498.png" alt="机械臂光影渲染" width="260"/></td>
-      <td><img src="assets/2025-07-01-21-28-54-d82abfd6870db45f6365af0977692bb7.png" alt="取咖啡" width="260"/></td>
-      <td><img src="assets/2025-07-01-21-29-31-image.png" alt="室内高斯泼溅" width="260"/></td>
-    </tr>
-    <tr>
-      <td>智元机器人多任务1</td>
-      <td>智元机器人多任务2</td>
-      <td>智元机器人多任务3</td>
-    </tr>
-        </tr>
-        <tr>
-      <td><img src="assets/2025-07-02-20-50-54-image.png" alt="机械臂光影渲染" width="260"/></td>
-      <td><img src="assets/2025-07-01-21-28-54-d82abfd6870db45f6365af0977692bb7.png" alt="取咖啡" width="260"/></td>
-      <td><img src="assets/2025-07-01-21-29-31-image.png" alt="室内高斯泼溅" width="260"/></td>
-    </tr>
-    <tr>
-      <td>地瓜RDK-X5连接lerobot-so101进行遥操作</td>
-      <td>智元机器人键盘操作</td>
-      <td>智元机器人轨迹录制</td>
-    </tr>
-  </table>
+  ## 📽️视频教程
+
+  Habitat导航基础复现： https://www.datawhale.cn/learn/content/258/6154
+
+  GenieSim一键启动教程：https://www.datawhale.cn/learn/content/258/6172
+
+  Joycon服务器本地异步遥控机械臂教程：https://www.datawhale.cn/learn/content/258/5728
+
+  Mujoco仿真UR机械臂抓取实验：https://www.bilibili.com/video/BV1WhxeznE61/
+
+  
+
+  
+
+  ## 🗺️ 学习地图
+
+  ### 一、基础入门 - 走进机器人的世界
+
+| 章节                | 关键内容                                                     | 状态 |
+| :------------------ | :----------------------------------------------------------- | :--- |
+| **1. 具身智能概述** | [定义背景、发展历程、未来趋势](./01-具身智能概述/1.1具身智能概述.md) | ✅    |
+| **2. 机器人学基础** | [运动学(DH参数)](02-机器人基础和控制、手眼协调/02机器人运动学与 DH 参数.md)、[动力学](02-机器人基础和控制、手眼协调/03机器人动力学.md)、[坐标变换](02-机器人基础和控制、手眼协调/01机器人空间描述与坐标变换.md) | ✅    |
+| **3. 硬件与电子**   | [地瓜开发板实战](03-机器人硬件、lerobot及地瓜RDK-X5开发板控制教程/01-RDKX5超新手入门教程.md)、[LeRobot遥操作](03-机器人硬件、lerobot及地瓜RDK-X5开发板控制教程/03RDK-X5连接lerobot机械臂进行遥操作.md)、[传感器选型](03-机器人硬件、lerobot及地瓜RDK-X5开发板控制教程/06传感器选型与数据采集.md)、[执行器原理](03-机器人硬件、lerobot及地瓜RDK-X5开发板控制教程/05执行器原理与选型.md)、阿加犀开发板实战 | ✅    |
+| **4. 软件基础设施** | ROS/ROS2 通信机制、AutoCAD/Solidworks 基础                   | 🚧    |
+
+  ### 二、核心技术 - 给机器人装上大脑
+
+  | 章节                   | 关键内容                                       | 状态 |
+  | :--------------------- | :--------------------------------------------- | :--- |
+  | **5. 计算机视觉 (CV)** | [目标检测 (YOLO)](./04-具身场景的计算机视觉、3D重建/02-抓取注意力热图.md)、[图像分割 (SAM)](./04-具身场景的计算机视觉、3D重建/01-sam和深度估计.md)、6D 位姿估计   | ✅    |
+  | **6. 运动与控制**      | 路径规划 (A*/RRT)、轨迹优化、PID 与 MPC 控制、模仿学习 (IL)、ACT复现   | ✅    |
+  | **7. 强化学习 (RL)**   | [多机器人PPO/SAC 算法详解](./05-具身场景的深度和强化学习/01多机器人搬运家具强化学习.md)、Isaac Gym 并行训练实战       | ✅    |
+  | **8. 仿真环境**        | Isaac Sim 高级渲染、MuJoCo 物理引擎、[Genie-Sim3教程](./10-具身智能其他仿真工具及仿真前沿/08GenieSim3配置.md) | ✅    |
+
+  ### 三、具身大脑 - 前沿论文复现与真机部署
+
+  | 章节                  | 关键内容                                    | 状态 |
+  | :-------------------- | :------------------------------------------ | :--- |
+  | **9. 灵巧手与操作**  | [Hand-Eye 标定](./02-机器人基础和控制、手眼协调/补充01手眼协调.md)、AnyGrasp 抓取算法 | 🚧    |
+  | **10. 具身智能benchmark和数据讲解** | [LIBERO](./09-具身智能数据及评估基准benchmark/01-libero.md)、[SimplerENV](./09-具身智能数据及评估基准benchmark/02-simplerenv.md)       | ✅    |
+  | **11. VLA 大模型**    | [SmolVLA 训练和部署](./06-策略抓取或抓取VLA/大模型控制、VLA、VLM/01SmolVLA-LIBERO/01SmolVLA-libero.md)、[OpenVLA部署](./06-策略抓取或抓取VLA/大模型控制、VLA、VLM/02OpenVLA复现/02openvla复现.md)、[RT-1 / RT-2 / RT-X 论文解读与代码分析](./06-策略抓取或抓取VLA/大模型控制、VLA、VLM/03RT系列论文解读与代码分析/01RT系列论文解读与代码分析.md)  | ✅    |
+  | **12. 综合项目复现** | [无人机多模态LLM导航](./13-其他前沿项目复现/无人机大模型+Groundingdino实践/无人机多模态大模型.md)| ✅    |
+
+  ## 🛠️ 环境要求
+
+  在开始之前，请确保你的开发环境满足以下基础要求（不同子项目复现可能略有不同，请参考各自项目的readme，我们会通过conda或mamba环境实现）：
+
+  - **Python**: 3.8+
+  - **GPU**: 推荐 NVIDIA RTX 3060+ (用于 Isaac Sim 渲染与 RL 训练)
+  - **OS**: Ubuntu 20.04 / 22.04 (推荐)
+  - **Core Libs**:
+    - `MuJoCo` (物理引擎)
+    - `Isaac Sim` (Nvidia 仿真平台)
+
+  ## 🤝 参与贡献
+
+  我们非常欢迎社区的贡献！无论是修复 Bug、补充文档，还是提交新的复现代码！
+
+  
+
+## 贡献者名单（教程部分）
+
+| 姓名            | 职责                     | 简介           | GitHub                                                 |
+| --------------- | ------------------------ | -------------- | ------------------------------------------------------ |
+| Ethan-Chen-plus | 项目负责人               | 中国科学院大学 | [@Ethan-Chen-plus](https://github.com/Ethan-Chen-plus) |
+| Suibian-YY-Pro  | 第1、2、3、4章贡献者     | 中国科学院大学 | [@Suibian-YY-pro](https://github.com/Suibian-YY-pro)   |
+| 李昀迪          | 第2、8、13章贡献者       | 北京科技大学   | [@muzilyd](https://github.com/muzilyd)                 |
+| 张天一          | 第8章贡献者              | 北京工业大学   | [@GodoneZ](https://github.com/GodoneZ)                 |
+| 陈可为          | 第5、6、7、9、10章贡献者 | 中国科学院大学 | [@Ethan-Chen-plus](https://github.com/Ethan-Chen-plus) |
+
+
+
+  **其他贡献者风采（补充相关资源、单独push readme子教程、文档挑错）：**
+
+  感谢以下小伙伴的参与和贡献：howe, Miles, 麦芒, HAO, [zhangningboo](https://github.com/zhangningboo)，[机智流硬件冷小莫](1412195676@qq.com)
+
+  **英文教程翻译者贡献：**
+
+我们同时准备了[英文部分](./en)的教程，感谢如下小伙伴的贡献：Lune、刘远洋、苏家煜、梁坚斌
+
+  <div align=center style="margin-top: 30px;">
+    <a href="https://github.com/datawhalechina/every-embodied/graphs/contributors">
+      <img src="https://contrib.rocks/image?repo=datawhalechina/every-embodied" />
+    </a>
+  </div>
+
+  ## Star History
+
+  [![Star History Chart](https://api.star-history.com/svg?repos=datawhalechina/every-embodied&type=date&legend=top-left)](https://www.star-history.com/#datawhalechina/every-embodied&type=date&legend=top-left)
+
+  ## 📬 联系我们
+
+  <div align=center>
+  <p>扫描下方二维码关注公众号：Datawhale，回复“具身智能”加入交流群</p>
+  <img src="https://raw.githubusercontent.com/datawhalechina/pumpkin-book/master/res/qrcode.jpeg" width="180" height="180">
+  <p>
+    <a href="https://datawhaler.feishu.cn/wiki/ANwTwcmK1iydqZkBrpRcia3nnlf">📚 飞书知识库</a> | 
+    <a href="https://www.datawhale.cn/learn/summary/258">🌐 官方网站</a>
+  </p>
+
+  </div>
+
+  ## 📄 LICENSE
+
+  <div align="center">
+  <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+    <img alt="CC BY 4.0 License" style="border-width:0" src="https://img.shields.io/badge/license-CC--BY%204.0-lightgrey" />
+  </a>
+  <br />
+  本项目文档与教程内容采用 <strong>Creative Commons Attribution 4.0 International (CC BY 4.0)</strong> 许可协议。
+  <br />
+  你可以自由分享与改编本项目内容，但需保留来源署名。详细条款见 <a href="LICENSE">LICENSE</a>。
   </div>
 
 
 
-## 🚀 学习指南和学习路径
-
-飞书文档：https://datawhaler.feishu.cn/wiki/ANwTwcmK1iydqZkBrpRcia3nnlf
-
-### 具身智能机器人
-
-1. **具身智能概述**
-
-- 定义与背景
-- 发展历程
-- 应用领域
-
-2. **机器人基础**
-
-- 机器人学基本概念
-- 运动学与动力学
-- 传感器与执行器
-- 机器人硬件选型
-- 地瓜机器人RDK使用和连接LeRobot SO101
-- 阿加犀开发板教程
-- 电路设计（todo）
-- AutoCAD绘图和Solidworks（todo）
-- 通信协议（todo）
-- ROS基础（todo）
-
-3. **计算机视觉**
-
-- 图像处理基础
-- 目标检测与识别
-- 图像分割
-- 位姿估计
-
-4. **机器人控制**
-
-- 运动规划
-- 路径规划
-- 控制算法
-
-5. **具身场景的深度和强化学习**
-
-- 强化学习
-
-6. **手眼协调**
-
-- 手眼标定
-- 抓取与操作
-
-7. **仿真环境学习**
-
-- Issac Sim/Issac Gym
-- Pybullet
-- gazebo（todo）
-- Genie-Sim
-
-8. **具身智能前沿项目（复现）**
-
-- 谷歌具身项目：RT-RT1、RT2、RTX（todo）
-- OmniGibson
-- BitVLA
-- 具身大脑RoboBrain2.0 (todo)
-- Aloha-ACT（todo）
-- OpenVLA（todo）
-- Octo（todo）
-- AngGrasp（todo）
-- 其他论文复现及代码
-
-## 🔧 环境要求
-
-- Python 3.8+
-- CUDA支持（用于3D仿真渲染，部分实验可以cpu上进行）
-- ROS/ROS2（可选，用于实际机器人控制）
-- MuJoCo（物理引擎）
-- Isaac Sim（NVIDIA高级仿真平台）
-
-感谢如下小伙伴的参与和贡献：
-
-howe、Miles、麦芒、HAO、[zhangningboo](https://github.com/zhangningboo)
-
-感谢如下小伙伴参与的翻译贡献：
 
 
-- 第1~3章 Lune
-- 第4~5章 刘远洋
-- 第6~7章 苏家煜
-- 第8~9章 梁坚斌 leoliang023
 
-## 🌟 学习社区
-
-- [加入讨论组](#)：与其他学习者交流经验
-- [常见问题解答](#)：查看常见问题及解决方案
-- [技术分享会](#)：定期举办线上技术分享
-
-## 👨‍💻 贡献指南
-
-欢迎提交Pull Request贡献更多教程和示例代码！👏
-
-1. Fork本仓库
-2. 开启一个Pull Request
-
-请确保提交的内容与仓库主题相关，并遵循现有的文件组织结构。
-
-## 📬 联系方式
-
-有任何问题或建议，请通过以下方式联系我们：
-
-<!-- - 📧 邮箱：[your-email@example.com] -->
-
-- 💬 微信公众号：datawhale
-- 🌐 网站：[https://datawhale.club/home]

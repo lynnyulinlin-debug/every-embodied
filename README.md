@@ -14,7 +14,7 @@
   # Every-Embodied : Zero to Hero in Embodied AI
 
   <p align="center">
-    📌 <a href="https://datawhaler.feishu.cn/wiki/ANwTwcmK1iydqZkBrpRcia3nnlf">在线阅读 (Read Online)</a> · ✨ <a href="##-学习地图">学习地图 (Learning Map)</a> · 🤖 <a href="##-📽️视频教程">前沿复现 (SOTA)</a>
+    📌 <a href="https://datawhaler.feishu.cn/wiki/ANwTwcmK1iydqZkBrpRcia3nnlf">在线阅读 (Read Online)</a> · ✨ <a href="#学习地图">学习地图 (Learning Map)</a> · 🤖 <a href="#视频教程">前沿复现 (SOTA)</a>
   </p>
 
   <p align="center">

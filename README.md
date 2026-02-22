@@ -114,13 +114,26 @@
       <sub>小型VLA测试机器人终身学习基准</sub>
     </td>
   </tr>
+    <tr>
+    <td width="33%" valign="top" align="center">
+      <img src="assets/chunwan_robot.gif" width="100%">
+      <br>
+        <strong><a href="./07-机器人操作、运动控制/Locomotion/01春晚舞蹈机器人复刻.md">春晚机器人复刻</a></strong>
+      <br>
+      <sub>输入豆包生成功夫视频，输出机器人mujoco仿真</sub>
+    </td>
+  </tr>
+
+
 </table>
 
 
+
   <div align="center">
-    <h3>⭐ 欢迎 <a href="https://github.com/datawhalechina/every-embodied" style="color: #0052cc;">点击此处 Star</a> 共同构建具身智能开源生态 ❤️</h3>
+    <h3>⭐ 欢迎点点 Star 共同构建具身智能开源生态 ❤️</h3>
   </div>
   具身智能（Embodied AI）是通往通用人工智能（AGI）的关键钥匙。
+
   **Every-Embodied 致力于打造一个“基础友好、工程可复现、前沿可拓展”的学习库。**
   我们希望降低门槛：即使你目前只有 Python 基础，也可以从仿真和最小可运行 Demo 出发，逐步完成从“看懂”到“动手复现”的跨越。
 
@@ -151,6 +164,7 @@
 
   ## 🔥 News & Highlights
 
+  - **[2025-02-21]** 新增春晚武术机器人复刻
   - **[2025-02-16]** 新增GenieSim一键启动镜像和视频教程
   - **[2025-01-15]** 新增Habitat导航实战一键启动镜像和视频教程及大模型导航实战VLN教程
 
@@ -163,7 +177,7 @@
   - **[2025-01-01]** 项目初始化，发布具身智能基础路线图。
     </details>
 
-  
+
   <span id="sota"></span>
   ## 📽️视频教程
 
@@ -177,7 +191,7 @@
 
   
 
-  
+
   <span id="learning-map"></span>
   ## 🗺️ 学习地图
 
@@ -230,7 +244,7 @@
 | 姓名            | 职责                     | 简介           | GitHub                                                 |
 | --------------- | ------------------------ | -------------- | ------------------------------------------------------ |
 | Ethan-Chen-plus | 项目负责人               | 中国科学院大学 | [@Ethan-Chen-plus](https://github.com/Ethan-Chen-plus) |
-| Suibian-YY-Pro  | 第1、2、3、4章贡献者     | 中国科学院大学 | [@Suibian-YY-pro](https://github.com/Suibian-YY-pro)   |
+| YYPro           | 第1、2、3、4章贡献者     | 中国科学院大学 | [@YYpro](https://github.com/Suibian-YY-pro)            |
 | 李昀迪          | 第2、8、13章贡献者       | 北京科技大学   | [@muzilyd](https://github.com/muzilyd)                 |
 | 张天一          | 第8章贡献者              | 北京工业大学   | [@GodoneZ](https://github.com/GodoneZ)                 |
 | 陈可为          | 第5、6、7、9、10章贡献者 | 中国科学院大学 | [@Ethan-Chen-plus](https://github.com/Ethan-Chen-plus) |

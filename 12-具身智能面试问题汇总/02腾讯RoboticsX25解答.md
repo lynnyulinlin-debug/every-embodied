@@ -196,9 +196,9 @@ $$P = \frac{S_{valid}}{S_{total}} = \frac{1/8}{1/2} = 25\%$$
 
 核心考察深度优先搜索（DFS）。
 
-Python
 
-```
+
+```Python
 def numIslands(grid):
     if not grid:
         return 0

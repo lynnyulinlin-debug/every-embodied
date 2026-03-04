@@ -271,7 +271,7 @@
 
   **其他贡献者风采（补充相关资源、单独push readme子教程、文档挑错）：**
 
-  感谢以下小伙伴的参与和贡献：howe, Miles, 麦芒, HAO, [zhangningboo](https://github.com/zhangningboo)，[机智流硬件冷小莫](1412195676@qq.com)
+  感谢以下小伙伴的参与和贡献：howe, Miles, 麦芒, HAO, [zhangningboo](https://github.com/zhangningboo)，[机智流硬件冷小莫](1412195676@qq.com)，[icarried](https://github.com/icarried)[修复雅可比矩阵文档](https://github.com/datawhalechina/every-embodied/issues/29)
 
   **英文教程翻译者贡献：**
 

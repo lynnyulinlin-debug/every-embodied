@@ -7,7 +7,8 @@
 1. 当前镜像环境能不能直接用。
 2. 训练应该下载 `merged` 还是非 `merged` 数据。
 3. 如何用最小代价启动训练、评测、复现实验。
-4. 哪些大文件不要提交进教程仓库。
+4. 训练配置具体怎么写，输出放到哪里。
+5. 哪些大文件不要提交进教程仓库。
 
 ---
 
@@ -21,6 +22,8 @@
 - `isaacsim` 可用：`5.1.0.0`
 - `lerobot` 可用：`0.4.3`
 - GPU：`NVIDIA L40`
+- 本地 HEAD：`2953e2f9c1376a1e49ac10b3ad690efb886f4c6c`
+- 当前远端 `origin/main`：`32b53595da504880592a79ed5e362ad0ba0fac6b`
 - 已成功跑通一轮 ACT 评测
 - 已成功跑通一轮 DP 评测，并且 `--policy_num_inference_steps 1` 生效
 
@@ -38,6 +41,20 @@
 说明：
 
 - 环境是能启动、能加载模型、能建场景、能完成评测的。
+- 当前本地代码不是远端最新。
+- 如果大家想严格对齐当前镜像，请先切到：
+
+```bash
+git checkout 2953e2f9c1376a1e49ac10b3ad690efb886f4c6c
+```
+
+- 如果大家想跟远端最新主分支对齐，再切到：
+
+```bash
+git fetch origin
+git checkout 32b53595da504880592a79ed5e362ad0ba0fac6b
+```
+
 - 当前复现实验结果与官方复现包描述一致，成功率依旧偏低，这更像是任务本身/物理效果问题，不是镜像起不来。
 
 ---
@@ -139,14 +156,32 @@ hf download lehome/dataset_challenge_merged \
 
 ## 3.4 训练 ACT
 
+建议使用教程专用配置，统一把输出保存到数据盘：
+
+- 配置文件：
+  - `/root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/configs/train_act_every_embodied.yaml`
+
 ```bash
-lerobot-train --config_path=configs/train_act.yaml
+mkdir -p /root/gpufree-data/lehome-outputs/train/act_top_long
+
+lerobot-train \
+  --config_path /root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/configs/train_act_every_embodied.yaml \
+  2>&1 | tee /root/gpufree-data/lehome-outputs/train/act_top_long/train.log
 ```
 
 ## 3.5 训练 DP
 
+同样建议使用教程专用配置：
+
+- 配置文件：
+  - `/root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/configs/train_dp_every_embodied.yaml`
+
 ```bash
-lerobot-train --config_path=configs/train_dp.yaml
+mkdir -p /root/gpufree-data/lehome-outputs/train/dp_top_long
+
+lerobot-train \
+  --config_path /root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/configs/train_dp_every_embodied.yaml \
+  2>&1 | tee /root/gpufree-data/lehome-outputs/train/dp_top_long/train.log
 ```
 
 ## 3.6 评测 ACT
@@ -154,13 +189,13 @@ lerobot-train --config_path=configs/train_dp.yaml
 ```bash
 python -m scripts.eval \
   --policy_type lerobot \
-  --policy_path outputs/train/act/checkpoints/last/pretrained_model \
+  --policy_path /root/gpufree-data/lehome-outputs/train/act_top_long/checkpoints/last/pretrained_model \
   --dataset_root Datasets/example/top_long_merged \
   --garment_type top_long \
   --num_episodes 2 \
   --enable_cameras \
   --save_video \
-  --video_dir outputs/eval_videos_act \
+  --video_dir /root/gpufree-data/lehome-outputs/eval/act_top_long \
   --device cpu
 ```
 
@@ -177,11 +212,123 @@ python -m scripts.eval \
   --num_episodes 2 \
   --enable_cameras \
   --save_video \
-  --video_dir outputs/eval_videos_dp \
+  --video_dir /root/gpufree-data/lehome-outputs/eval/dp_top_long \
   --device cpu \
   --policy_device cpu \
   --policy_num_inference_steps 1
 ```
+
+## 3.8 训练配置详解
+
+教程专用配置里，最值得解释的是这些字段：
+
+- `dataset.root`
+  - 训练数据目录。
+  - baseline 默认使用 `Datasets/example/top_long_merged`。
+- `policy.type`
+  - `act` 或 `diffusion`。
+- `policy.device`
+  - 训练建议 `cuda`。
+- `input_features`
+  - baseline 推荐 `observation.state + top/left/right RGB`。
+- `output_features`
+  - baseline 推荐输出 `action`。
+- `output_dir`
+  - 已改到数据盘，例如 `/root/gpufree-data/lehome-outputs/train/act_top_long`。
+- `batch_size`
+  - 和显存直接相关。
+  - ACT 当前建议 `16`，DP 当前建议 `8`。
+- `steps`
+  - 总训练步数。
+  - ACT 可先跑 `30000`，DP 建议更长，教程配置里给到 `90000`。
+- `save_freq`
+  - checkpoint 保存间隔。
+  - 教程里调高了保存频率，便于中间结果回看。
+- `log_freq`
+  - 日志打印频率。
+  - 教程里调高到更细，方便后续画图和排障。
+- `eval_freq`
+  - 训练中的阶段性评估间隔。
+  - 便于观察并不是只有 loss 在变化。
+
+## 3.9 建议保留的训练中间结果
+
+建议至少保留这些：
+
+- `train.log`
+- 所有 checkpoint
+- `config.yaml` 或训练配置副本
+- 训练曲线图
+- 训练指标 CSV / JSON 摘要
+- 若有阶段性 eval，也保留对应日志和视频
+
+建议统一放到：
+
+```text
+/root/gpufree-data/lehome-outputs/
+├── train/
+├── eval/
+└── plots/
+```
+
+## 3.10 训练日志解析与绘图
+
+教程已附带一个脚本：
+
+- `/root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/scripts/plot_train_metrics.py`
+
+它会从 `train.log` 中解析并生成：
+
+- `train_metrics.csv`
+- `train_metrics_summary.json`
+- `train_metrics.png`
+
+示例：
+
+```bash
+python /root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/scripts/plot_train_metrics.py \
+  --log_file /root/gpufree-data/lehome-outputs/train/act_top_long/train.log \
+  --out_dir /root/gpufree-data/lehome-outputs/plots/act_top_long \
+  --title "ACT Top-Long Training Metrics"
+```
+
+当前脚本默认记录这些指标：
+
+- `loss`
+- `grdn`，也就是 gradient norm
+- `lr`
+- `updt_s`
+- `data_s`
+- `step_per_sec`
+
+## 3.11 除了 loss，还建议看哪些指标
+
+如果站在 ACT / Diffusion Policy 论文复现和工程训练角度，除了 loss，还建议尽量记录：
+
+- 训练 loss
+- 验证 loss
+- gradient norm
+- learning rate
+- data loading time
+- update time
+- steps/sec 或 samples/sec
+- checkpoint 对应的阶段性 eval 成功率
+- 平均回报 `return`
+- episode length
+- 不同 garment/category 的 success rate
+
+真正和比赛结果最相关的，不是单独看 loss，而是：
+
+1. `loss` 是否稳定下降
+2. `gradient norm` 是否异常爆炸
+3. `lr` 调度是否正常
+4. 中间 checkpoint 的 `eval success rate` 是否同步提升
+
+如果后续你要再往上加，我建议优先补：
+
+- 每个 checkpoint 自动 eval
+- 每个类别的 success rate 曲线
+- best checkpoint 自动挑选
 
 ---
 
@@ -220,7 +367,7 @@ python -m scripts.eval \
 
 ---
 
-## 5. 当前镜像中的推荐保留内容
+## 5. 清理与仓库控制
 
 如果你要把这个教程整理进自己的大仓库，只建议保留这些轻量内容：
 
@@ -245,6 +392,22 @@ python -m scripts.eval \
 
 原因很简单：这些内容都应该通过下载命令获取，不应该进教程子仓库。
 
+### 5.1 之前失败的评测结果
+
+如果只是教程清理，之前那批 `0%` 成功率的失败视频可以删除。
+
+当前需要删除的目录是：
+
+```text
+/root/gpufree-data/lehome-eval-outputs/
+```
+
+后续统一改用：
+
+```text
+/root/gpufree-data/lehome-outputs/eval/
+```
+
 ---
 
 ## 6. 建议的仓库组织方式
@@ -257,7 +420,9 @@ python -m scripts.eval \
     ├── README.md
     ├── .gitignore
     └── resources/
-        └── commands.md
+        ├── commands.md
+        ├── configs/
+        └── scripts/
 ```
 
 如果后续你还会增加其他比赛，也可以沿用同样的结构。
@@ -327,4 +492,3 @@ cat Assets/objects/Challenge_Garment/Release/Release_test_list.txt
 - 镜像可用
 - 训练/评测链路可用
 - 教程可以基于这套镜像直接编写和发布
-

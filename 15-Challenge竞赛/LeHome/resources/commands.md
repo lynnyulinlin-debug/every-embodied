@@ -15,13 +15,17 @@ hf download lehome/dataset_challenge_merged --repo-type dataset --local-dir Data
 ## 训练 ACT
 
 ```bash
-lerobot-train --config_path=configs/train_act.yaml
+lerobot-train \
+  --config_path /root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/configs/train_act_every_embodied.yaml \
+  2>&1 | tee /root/gpufree-data/lehome-outputs/train/act_top_long/train.log
 ```
 
 ## 训练 DP
 
 ```bash
-lerobot-train --config_path=configs/train_dp.yaml
+lerobot-train \
+  --config_path /root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/configs/train_dp_every_embodied.yaml \
+  2>&1 | tee /root/gpufree-data/lehome-outputs/train/dp_top_long/train.log
 ```
 
 ## 评测 ACT
@@ -35,7 +39,7 @@ python -m scripts.eval \
   --num_episodes 2 \
   --enable_cameras \
   --save_video \
-  --video_dir outputs/eval_videos_act \
+  --video_dir /root/gpufree-data/lehome-outputs/eval/act_top_long \
   --device cpu
 ```
 
@@ -44,14 +48,23 @@ python -m scripts.eval \
 ```bash
 python -m scripts.eval \
   --policy_type lerobot \
-  --policy_path outputs/train/dp/checkpoints/last/pretrained_model \
+  --policy_path /root/gpufree-data/lehome-outputs/train/dp_top_long/checkpoints/last/pretrained_model \
   --dataset_root Datasets/example/top_long_merged \
   --garment_type top_long \
   --num_episodes 2 \
   --enable_cameras \
   --save_video \
-  --video_dir outputs/eval_videos_dp \
+  --video_dir /root/gpufree-data/lehome-outputs/eval/dp_top_long \
   --device cpu \
   --policy_device cpu \
   --policy_num_inference_steps 1
+```
+
+## 解析训练日志并画图
+
+```bash
+python /root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/scripts/plot_train_metrics.py \
+  --log_file /root/gpufree-data/lehome-outputs/train/act_top_long/train.log \
+  --out_dir /root/gpufree-data/lehome-outputs/plots/act_top_long \
+  --title "ACT Top-Long Training Metrics"
 ```

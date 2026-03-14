@@ -746,6 +746,124 @@ python /root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/scr
 
 这里保留的是“教学样例输出”，不是完整比赛统计。因为官方 `category eval` 会继续遍历该类别下的 garment 列表，做教程时通常先保留首个 episode 的真实样例就够用了。
 
+## 3.14 比赛强化版：L40 单卡长训配置
+
+如果目标从“先学会跑通”切到“做一个更像比赛提交的基线”，建议不要继续只盯 `top_short`。更合理的做法是直接切到：
+
+- 数据：`four_types_merged`
+- 模型：ACT
+- 设备：单卡 `L40`
+
+这里先把边界讲清楚：这不等于“保证前三名”。比赛排名最终取决于数据、策略结构、评测细节和训练时间，不能在教程里伪造承诺。但它确实比教学 smoke 更接近一个可拿去继续打榜的起点。
+
+### 3.14.1 为什么这里先推 ACT，而不是先推 DP
+
+原因很实际：
+
+- ACT 在这套数据上更容易先把长训稳定跑起来
+- 单卡 L40 下，ACT 更容易控制 batch size 和训练节奏
+- 如果要在一小时内把显卡稳定吃满并启动一个长期实验，ACT 的工程风险更低
+
+所以本教程把“比赛强化版第一枪”定为：
+
+- `four_types_merged + ACT + batch_size 64 + 50000 steps`
+
+对应配置文件：
+
+- `/root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/configs/train_act_competition_l40.yaml`
+
+### 3.14.2 为什么不是一直把 batch size 往上堆
+
+我在本机对四类联合训练做了三档上探：
+
+- `batch_size=96`：OOM
+- `batch_size=88`：OOM
+- `batch_size=80`：OOM
+
+最后落回 `batch_size=64`，这是为了保证：
+
+- 能稳定启动长训
+- 不在前几步直接炸掉
+- 还能维持很高的 GPU 占用
+
+也就是说，这里追求的是“稳定跑完整个长训”的最强可用点，而不是只追第一步把显存堆满。
+
+### 3.14.3 当前正在跑的长训
+
+当前本机已经启动：
+
+- 训练日志：
+  - `/root/gpufree-data/lehome-outputs/train/act_four_types_l40.log`
+- GPU 采样：
+  - `/root/gpufree-data/lehome-outputs/monitor/act_four_types_l40_gpu.csv`
+- 训练曲线图：
+  - `/root/gpufree-data/lehome-outputs/plots/act_four_types_l40_live/train_metrics.png`
+- GPU 曲线图：
+  - `/root/gpufree-data/lehome-outputs/plots/act_four_types_l40_live/gpu_metrics.png`
+
+训练命令等价于：
+
+```bash
+cd /root/lehome-challenge
+source .venv/bin/activate
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+
+lerobot-train \
+  --config_path /root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/configs/train_act_competition_l40.yaml \
+  2>&1 | tee /root/gpufree-data/lehome-outputs/train/act_four_types_l40.log
+```
+
+### 3.14.4 当前已经看到的训练信号
+
+长训刚起步时，本机已经出现下面这些变化：
+
+- step `50`：loss `12.334`
+- step `100`：loss `3.554`
+- step `150`：loss `2.940`
+
+这说明至少在训练早期，loss 下降是明显的，不是卡死或者纯噪声震荡。
+
+GPU 采样也已经表明这轮长训确实把 L40 吃得很满：
+
+- 显存占用：约 `45.1 GiB / 46.1 GiB`
+- GPU Utilization：长期接近 `100%`
+- 功耗：大约 `280W` 到 `300W`
+
+从工程角度，这说明当前这份配置已经达到了“稳定且接近吃满单卡”的目标。
+
+### 3.14.5 教程里建议展示的图
+
+下面两张图就是更适合放进教程正文的版本，标题全部用英文，方便读者直接看图学判断。
+
+训练曲线：
+
+![ACT training metrics](/root/gpufree-data/lehome-outputs/plots/act_four_types_l40_live/train_metrics.png)
+
+GPU 曲线：
+
+![L40 GPU monitor](/root/gpufree-data/lehome-outputs/plots/act_four_types_l40_live/gpu_metrics.png)
+
+### 3.14.6 这个长训为什么定在 50000 steps
+
+这里故意没有写成无限拉长，原因是：
+
+- 比赛训练不是“越久越一定更好”
+- 在很多视觉策略里，前中期下降最快，后期会进入边际收益变小的区间
+- 对教程和服务器资源来说，`50000` 已经属于“足够长、能看到明显趋势、但还算折中”的范围
+
+所以这份配置更适合作为：
+
+- 第一轮正式 baseline
+- 第一轮打榜前的主实验
+- 后续再决定是否延长到 `70000` 或 `90000` 的参考起点
+
+如果长训到中后期发现：
+
+- loss 已明显平台化
+- 中间 checkpoint 的 eval success rate 不再涨
+
+那就不一定值得无限继续烧卡。
+
 ---
 
 ## 4. 推荐训练策略

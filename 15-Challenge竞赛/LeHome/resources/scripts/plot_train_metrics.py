@@ -6,13 +6,23 @@ import re
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
 
 
 LINE_RE = re.compile(
-    r"step:(?P<step>\d+)\s+smpl:(?P<smpl>\d+)\s+ep:(?P<ep>\d+)\s+epch:(?P<epch>[0-9.]+)\s+"
+    r"step:(?P<step>\d+)\s+smpl:(?P<smpl>[0-9.+-eEKM]+)\s+ep:(?P<ep>\d+)\s+epch:(?P<epch>[0-9.]+)\s+"
     r"loss:(?P<loss>[0-9.+-eE]+)\s+grdn:(?P<grdn>[0-9.+-eE]+)\s+lr:(?P<lr>[0-9.+-eE]+)\s+"
     r"updt_s:(?P<updt_s>[0-9.+-eE]+)\s+data_s:(?P<data_s>[0-9.+-eE]+)"
 )
+
+
+def parse_compact_number(value: str) -> int:
+    value = value.strip().upper()
+    if value.endswith("K"):
+        return int(float(value[:-1]) * 1_000)
+    if value.endswith("M"):
+        return int(float(value[:-1]) * 1_000_000)
+    return int(float(value))
 
 
 def parse_rows(log_file: Path) -> list[dict]:
@@ -25,7 +35,7 @@ def parse_rows(log_file: Path) -> list[dict]:
         rows.append(
             {
                 "step": int(data["step"]),
-                "smpl": int(data["smpl"]),
+                "smpl": parse_compact_number(data["smpl"]),
                 "ep": int(data["ep"]),
                 "epch": float(data["epch"]),
                 "loss": float(data["loss"]),
@@ -96,32 +106,50 @@ def save_plot(rows: list[dict], plot_path: Path, title: str) -> None:
     update_s = [r["updt_s"] for r in rows]
     data_s = [r["data_s"] for r in rows]
 
-    fig, axes = plt.subplots(2, 2, figsize=(14, 9))
-    fig.suptitle(title)
+    plt.style.use("seaborn-v0_8-whitegrid")
+    fig, axes = plt.subplots(2, 2, figsize=(15, 9.5))
+    fig.patch.set_facecolor("#f6f3ee")
+    fig.suptitle(title, fontsize=18, fontweight="bold", y=0.98)
 
-    axes[0, 0].plot(steps, loss)
-    axes[0, 0].set_title("Loss")
+    colors = {
+        "loss": "#d1495b",
+        "grad": "#00798c",
+        "lr": "#edae49",
+        "update": "#30638e",
+        "data": "#7f5539",
+    }
+
+    for ax in axes.flat:
+        ax.set_facecolor("#fffdf8")
+        for spine in ax.spines.values():
+            spine.set_alpha(0.25)
+        ax.tick_params(labelsize=10)
+        ax.grid(alpha=0.22, linewidth=0.8)
+
+    axes[0, 0].plot(steps, loss, color=colors["loss"], linewidth=2.4)
+    axes[0, 0].set_title("Training Loss", fontsize=13, fontweight="bold")
     axes[0, 0].set_xlabel("Step")
     axes[0, 0].set_ylabel("Loss")
 
-    axes[0, 1].plot(steps, grad_norm)
-    axes[0, 1].set_title("Gradient Norm")
+    axes[0, 1].plot(steps, grad_norm, color=colors["grad"], linewidth=2.4)
+    axes[0, 1].set_title("Gradient Norm", fontsize=13, fontweight="bold")
     axes[0, 1].set_xlabel("Step")
     axes[0, 1].set_ylabel("Grad Norm")
 
-    axes[1, 0].plot(steps, lr)
-    axes[1, 0].set_title("Learning Rate")
+    axes[1, 0].plot(steps, lr, color=colors["lr"], linewidth=2.4)
+    axes[1, 0].set_title("Learning Rate", fontsize=13, fontweight="bold")
     axes[1, 0].set_xlabel("Step")
     axes[1, 0].set_ylabel("LR")
+    axes[1, 0].yaxis.set_major_formatter(FuncFormatter(lambda y, _: f"{y:.1e}"))
 
-    axes[1, 1].plot(steps, update_s, label="update_s")
-    axes[1, 1].plot(steps, data_s, label="data_s")
-    axes[1, 1].set_title("Timing")
+    axes[1, 1].plot(steps, update_s, label="Update", color=colors["update"], linewidth=2.2)
+    axes[1, 1].plot(steps, data_s, label="Data", color=colors["data"], linewidth=2.2)
+    axes[1, 1].set_title("Step Timing", fontsize=13, fontweight="bold")
     axes[1, 1].set_xlabel("Step")
     axes[1, 1].set_ylabel("Seconds")
-    axes[1, 1].legend()
+    axes[1, 1].legend(frameon=False, fontsize=10, loc="upper right")
 
-    fig.tight_layout()
+    fig.tight_layout(rect=[0, 0, 1, 0.96])
     plot_path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(plot_path, dpi=160)
 

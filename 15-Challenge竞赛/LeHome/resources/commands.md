@@ -72,3 +72,32 @@ python /root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/scr
   --out_dir /root/gpufree-data/lehome-outputs/plots/act_top_short \
   --title "ACT Top-Short Training Metrics"
 ```
+
+## 比赛强化版 ACT 长训
+
+```bash
+cd /root/lehome-challenge
+source .venv/bin/activate
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+
+lerobot-train \
+  --config_path /root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/configs/train_act_competition_l40.yaml \
+  2>&1 | tee /root/gpufree-data/lehome-outputs/train/act_four_types_l40.log
+```
+
+## 采样 GPU 指标
+
+```bash
+/root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/scripts/sample_gpu_metrics.sh \
+  /root/gpufree-data/lehome-outputs/monitor/act_four_types_l40_gpu.csv \
+  10
+```
+
+## 画 GPU 曲线
+
+```bash
+python /root/gpufree-data/every-embodied/15-Challenge竞赛/LeHome/resources/scripts/plot_gpu_metrics.py \
+  --csv_file /root/gpufree-data/lehome-outputs/monitor/act_four_types_l40_gpu.csv \
+  --out_png /root/gpufree-data/lehome-outputs/plots/act_four_types_l40_live/gpu_metrics.png \
+  --title "L40 GPU Monitor During ACT Training"
+```

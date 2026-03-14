@@ -1,0 +1,16 @@
+Assets/
+Datasets/
+outputs/
+logs/
+.cache/
+models/
+videos/
+plots/
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.mp4
+*.zip
+*.tar
+*.tar.gz

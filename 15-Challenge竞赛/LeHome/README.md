@@ -10,13 +10,20 @@
 4. 训练配置具体怎么写，输出放到哪里。
 5. 哪些大文件不要提交进教程仓库。
 
+
+<video src="https://assets.datawhale.cn/1090/dashboard/1773720966495/LeHome%E6%95%99%E7%A8%8B.mp4" width="100%" controls>
+  您的浏览器不支持 HTML5 视频。
+</video>
+
+
+
 ---
 
 ## 1. 当前镜像是否可用
 
 结论：可用。
 
-我已在当前镜像中完成以下验证：
+已在当前镜像中完成以下验证：
 
 - `LeHome` 仓库路径：`/root/lehome-challenge`
 - `isaacsim` 可用：`5.1.0.0`
@@ -1026,3 +1033,18 @@ cat Assets/objects/Challenge_Garment/Release/Release_test_list.txt
 - 镜像可用
 - 训练/评测链路可用
 - 教程可以基于这套镜像直接编写和发布
+
+
+## 备注
+
+安装图片和视频查看器
+
+```bash
+sudo apt install celluloid
+
+sudo apt install viewnior
+
+# 将常见图片格式的默认打开程序设为 Viewnior
+xdg-mime default viewnior.desktop image/jpeg image/png image/gif image/bmp image/webp
+
+```

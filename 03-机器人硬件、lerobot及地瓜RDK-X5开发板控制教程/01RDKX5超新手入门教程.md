@@ -32,7 +32,7 @@
 
 ## 如何购买
 
-第一步就是 买板子 啦！大家可以去到 [RDK官网](https://developer.d-robotics.cc/) 进行购买
+第一步就是 **买板子** 啦！大家可以去到 [RDK官网](https://developer.d-robotics.cc/) 进行购买。
 
 收到的板子会带一个盒子，非常美观：
 
@@ -127,7 +127,7 @@ RDK套件目前提供 Ubuntu 22.04 系统镜像，可支持 Desktop 桌面图形
 
 - 准备至少 `8GB` 容量的 Micro SD 卡
 - SD 读卡器
-- 下载镜像烧录工具[balenaEtcher](https://etcher.balena.io/)，[balenaEtcher](https://etcher.balena.io/) 是一款支持 Windows/Mac/Linux 等多平台的 PC 端启动盘制作工具。
+- 下载镜像烧录工具[balenaEtcher](https://etcher.balena.io/)，[balenaEtcher](https://etcher.balena.io/) 是一款支持 Windows/Mac/Linux 等多平台的 PC 端启动盘制作工具。使用轻量版镜像烧录工具 [Rufus](https://rufus.ie/zh/) 也是可以的。
 
 制作SD启动卡流程如下：
 

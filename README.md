@@ -257,7 +257,7 @@
 
 | 专题 | 关键内容 | 状态 |
 | :--- | :--- | :--- |
-| **15. 达摩院组队学习专题** | [专题导航](./15-专题组队学习/01-达摩院组队学习/README.md)、[组织学习方案](./15-专题组队学习/01-达摩院组队学习/01-组织学习方案.md)、[学习任务安排](./15-专题组队学习/01-达摩院组队学习/02-学习任务安排.md)、[乐云平台体验指引](./15-专题组队学习/01-达摩院组队学习/04-乐云平台体验指引.md) | ✅ |
+| **16. 达摩院组队学习专题** | [专题导航](./16-专题组队学习/01-达摩院组队学习/README.md)、[组织学习方案](./16-专题组队学习/01-达摩院组队学习/01-组织学习方案.md)、[学习任务安排](./16-专题组队学习/01-达摩院组队学习/02-学习任务安排.md)、[乐云平台体验指引](./16-专题组队学习/01-达摩院组队学习/04-乐云平台体验指引.md) | ✅ |
 
   ## 🛠️ 环境要求
 
@@ -286,12 +286,10 @@
 | 张天一          | 第8章贡献者              | 北京工业大学   | [@GodoneZ](https://github.com/GodoneZ)                 |
 | 陈可为          | 第5、6、7、9、10章贡献者 | 中国科学院大学 | [@Ethan-Chen-plus](https://github.com/Ethan-Chen-plus) |
 | 霍海杰          | 第1章贡献者             | 佛山大学      | [@howe12](https://github.com/howe12) |
-| HinGwen·Woong  | 第3章贡献者             | 机器人全栈开发者 | [@PeterH0323](https://github.com/PeterH0323) |
-
 
   **其他贡献者风采（补充相关资源、单独push readme子教程、文档挑错）：**
 
-  感谢以下小伙伴的参与和贡献：howe, Miles, 麦芒, HAO, [zhangningboo](https://github.com/zhangningboo)，[机智流硬件冷小莫](1412195676@qq.com)，[icarried](https://github.com/icarried)[修复雅可比矩阵文档](https://github.com/datawhalechina/every-embodied/issues/29)
+  感谢以下小伙伴的参与和贡献：howe, Miles, 麦芒, HAO, [zhangningboo](https://github.com/zhangningboo)，[机智流硬件冷小莫](1412195676@qq.com)，[icarried](https://github.com/icarried)[修复雅可比矩阵文档](https://github.com/datawhalechina/every-embodied/issues/29) , [PeterH0323-贡献RDKx5入门教程](https://github.com/PeterH0323) 
 
   **英文教程翻译者贡献：**
 

@@ -308,12 +308,15 @@
   ## 📬 联系我们
 
   <div align=center>
-  <p>扫描下方二维码关注公众号：Datawhale，回复“具身智能”加入交流群</p>
+  <p>如果你发现教程有 Bug，或者有任何想要交流、学习、讨论、吐槽的具身智能内容，或者有更 High-level 的 Idea，别让它只停留在你的神经元里！扫码直连微信交流群，一起为具身智能‘注入灵魂’。</p>
+  <img src="./assets/wechat.png" width="180" height="180">
+  <p>扫描下方二维码关注公众号：Datawhale</p>
   <img src="https://raw.githubusercontent.com/datawhalechina/pumpkin-book/master/res/qrcode.jpeg" width="180" height="180">
   <p>
     <a href="https://datawhale-eai.feishu.cn/wiki/QvxQwV2Qyij1NakV9IdcjTl1nJd">📚 飞书知识库</a> | 
     <a href="https://www.datawhale.cn/learn/summary/258">🌐 官方网站</a>
   </p>
+
 
   </div>
 

@@ -219,22 +219,26 @@ reacher任务数据地址：https://huggingface.co/datasets/quentinll/lewm-reach
 
 为每一个任务新建文件夹，例如tworoom任务的目录结构如下：
 
+```python
 lewm
 └── tworoom
     └── tworoom
         ├── lewm_object.ckpt
         └── tworoom.h5
+```
 
 其中tworoom.h5为解压的数据文件，lewm_object.ckpt为模型权重文件
 
 cube任务有些不一样
 
+```python
 lewm
 └── cube
     ├── ogbench
     │   └── cube_single_expert.h5
     └── cube
         └── lewm_object.ckpt
+```
 
 其他的任务可以自行设置路径
 
@@ -294,10 +298,10 @@ evaluation_time: 179.38973236083984 seconds
 
 可以看到，tworoom简单导航任务的成功率较高
 
-<video src="assets/tworoom1.mp4" controls width="600">
+<video src="assets/tworoom1.mp4">
 </video>
 
-<video src="assets/tworoom2.mp4" controls width="600">
+<video src="assets/tworoom2.mp4">
 </video>
 
 ### cube效果展示
@@ -332,10 +336,10 @@ def _compute_successes(self):
 
 只要方块位置对就算成功，其实有时候机械臂的状态也是成功率判断的一个标准，因此可能会有些偏差。
 
-<video src="assets/cube1.mp4" controls width="600">
+<video src="assets/cube1.mp4">
 </video>
 
-<video src="assets/cube2.mp4" controls width="600">
+<video src="assets/cube2.mp4">
 </video>
 
 

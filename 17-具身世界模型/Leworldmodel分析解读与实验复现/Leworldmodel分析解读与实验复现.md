@@ -209,6 +209,8 @@ pip install stable-worldmodel[train,env]
 
 这边推荐下载tworoom和cube这两个数据，因为官方在google drive中提供的模型权重，由于进不去网站，所以下载不了，因此，我们从零开始训练了tworoom和cube这两个环境，得到了两个权重，由于卡和时间有限，tworoom训练了完整的轮次，但是cube只训练了12轮，大家想要尝试的可以自行训练。（官方提供的huggingface下的模型pt权重不是eval所需要的ckpt权重，不用下载，或者可以自行修改测试文件，将ckpt加载换成pt加载）
 
+自己训练的模型权重下载地址：https://huggingface.co/Datawhale/lewm/tree/main
+
 tworoom任务数据地址：https://huggingface.co/datasets/quentinll/lewm-tworooms/tree/main
 
 cube任务数据地址：https://huggingface.co/datasets/quentinll/lewm-cube/tree/main

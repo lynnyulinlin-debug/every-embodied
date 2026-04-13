@@ -195,3 +195,7 @@ datawhale_eai_pnp_language
 **/wandb/
 **/ckpt/
 **/tmp_*.json
+
+# Local ebook web app dependencies
+node_modules/
+artifacts/

@@ -1,0 +1,35 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+*.log
+
+# Large local artifacts
+*.pt
+*.pth
+*.onnx
+*.tar
+*.zip
+*.7z
+*.img
+*.exe
+
+# Runtime and debug outputs
+temp/
+trash/
+tmp_*/
+mask_*.png
+*_bbox.png
+*_overlay.png
+*_input.png
+
+# Local-only scene editing tools
+scene_layout_editor.py
+SCENE_LAYOUT_EDITOR_README.md
+build_robocasa_scene.py
+
+# Third-party or generated workspaces
+repos/
+.cache/
+node_modules/

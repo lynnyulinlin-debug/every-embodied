@@ -37,6 +37,6 @@ OpenClaw 的集成层会先读环境变量，再回退到本机的 `~/.openclaw/
 
 ## 对应代码
 
-- [integrations.py](C:/oc/tuntunclaw/integrations.py)
-- [workflow_hooks.py](C:/oc/tuntunclaw/workflow_hooks.py)
-- [main.py](C:/oc/tuntunclaw/main.py)
+- [integrations.py](./tuntunclaw/integrations.py)
+- [workflow_hooks.py](./tuntunclaw/workflow_hooks.py)
+- [main.py](./tuntunclaw/main.py)

@@ -12,7 +12,7 @@
 4. 一键下单入口
 5. 最近一次任务执行结果
 
-## 建议展示区块
+## 前端展示区块
 
 - 任务输入区：用于输入自然语言任务
 - 执行状态区：展示 OpenClaw 任务阶段
@@ -31,7 +31,7 @@
 - 不提交场景编辑器：`scene_layout_editor.py` 和 `SCENE_LAYOUT_EDITOR_README.md`
 - 不提交本地飞书 token、OpenAI key、机器人真实内网地址
 
-## 建议保留
+## 可公开保留的文件
 
 - `.env.example`
 - `README.md`

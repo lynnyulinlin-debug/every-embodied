@@ -42,7 +42,7 @@ OPENCLAW_FEISHU_BITABLE_TABLE_ID=
 
 ## 同步入口
 
-本专题后续会把 `tuntunclaw` 代码放进同级子目录。同步入口对应：
+本专题已经在同级目录提供 `tuntunclaw` 代码。库存同步入口对应：
 
 - [integrations.py](./tuntunclaw/integrations.py)
 - [workflow_hooks.py](./tuntunclaw/workflow_hooks.py)

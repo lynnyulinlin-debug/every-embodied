@@ -54,7 +54,7 @@ Magicbox 的原生语音链路由四段连续流程组成。
 
 ## 四、先对齐原厂脚本的真实模型路径
 
-你这块板子上，原厂 `magicbox-start` 的语音链路并不是从 `/media/sunrise/...` 读取模型，而是使用 `/userdata/magicbox/config` 和 `/userdata/magicbox/dep`。这正是为什么原厂 `systemctl` 可以直接工作，而你按 U 盘占位路径检查却失败了。
+本教程验证的原厂 `magicbox-start` 语音链路并不是从 `/media/sunrise/...` 读取模型，而是使用 `/userdata/magicbox/config` 和 `/userdata/magicbox/dep`。因此，优先检查原厂配置路径，比直接按 U 盘占位路径排查更可靠。
 
 我已经核对过原厂脚本，当前真实路径如下：
 
@@ -125,13 +125,13 @@ source /userdata/magicbox/app/ros_ws/install/local_setup.bash
 
 ### 2. 先检查麦克风设备有没有被占用
 
-你这块板子上，`audio_io` 默认使用的采集设备确实是：
+本教程验证的 `audio_io` 默认采集设备是：
 
 ```text
 plughw:0,0
 ```
 
-而板子当前的实际声卡列表也是存在这个设备的：
+实际声卡列表中应当能看到对应设备：
 
 ```text
 card 0: duplexaudioi2s1, device 0
@@ -145,7 +145,7 @@ alsa_device_init snd_pcm_open plughw:0,0 failed
 ret=-16
 ```
 
-含义并不是“找不到设备”，而是“设备忙，已经被别的进程占用”。在你这块板子上，当前占用者已经查到是：
+含义并不是“找不到设备”，而是“设备忙，已经被别的进程占用”。常见占用者是：
 
 ```text
 pulseaudio
@@ -302,7 +302,7 @@ ros2 launch audio_io audio_io.launch.py ...
 
 时，并不会天然复现“开机提示音 + 蓝灯 + 模式切换”的完整产品体验。因为这些现象本来就不全在 `audio_io` 里。
 
-至于“说什么话可以开始录音”，当前这部分唤醒词并没有直接明文写在我们这次查到的 `start.py` 和 launch 文件里。已经能够确认的是：
+至于“说什么话可以开始录音”，当前这部分唤醒词并没有直接明文写在已核对的 `start.py` 和 launch 文件里。已经能够确认的是：
 
 - 右键模式本身会播放原厂提示音
 - 语音识别成功后文本会进入 `/prompt_text`
@@ -410,7 +410,7 @@ ros2 topic list | grep -E "prompt_text|tts_text"
 
 ## 十二、如果后续要迁移到 U 盘，应当怎样做
 
-当你已经确认原厂路径版本可以稳定工作后，再考虑把大模型与依赖迁移到 U 盘。这样做的目标不是“第一次就换路径”，而是减少系统盘占用，并为后续 OpenClaw、更多仓库和录课素材腾空间。
+当你已经确认原厂路径版本可以稳定工作后，再考虑把大模型与依赖迁移到 U 盘。这样做的目标不是“第一次就换路径”，而是减少系统盘占用，并为后续 OpenClaw、更多仓库和实验日志腾空间。
 
 迁移时应遵循一个原则：先保持目录结构清晰，再用显式传参替换默认值。下面这组路径只有在真实存在时才应该使用：
 
@@ -457,7 +457,7 @@ cp "$USB_ROOT/models/qwen2.5-1.5b-instruct-q5_k_m.gguf" /dev/shm/
 到这一章结束时，读者不应只是“跑过一次语音命令”，而应该真正掌握下面五件事。
 
 第一，知道 `audio_io` 与 `qwen_llm` 分别负责哪一段链路。  
-第二，知道你这块板子的原厂真实路径在 `/userdata/magicbox/config` 与 `/userdata/magicbox/dep`，而不是默认就是某个 U 盘路径。  
+第二，知道本教程验证的原厂真实路径在 `/userdata/magicbox/config` 与 `/userdata/magicbox/dep`，而不是默认就是某个 U 盘路径。
 第三，知道应该去哪里观察结果：`/prompt_text`、`/tts_text`、终端日志和设备本体播报。  
 第四，知道出现问题时应该先查原厂模型路径、节点状态和关键话题，而不是笼统地把问题归结为“LLM 不工作”。  
 第五，知道 U 盘迁移属于链路跑通之后的扩展步骤，而不是第一次验证原生链路时的默认前提。

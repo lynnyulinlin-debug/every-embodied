@@ -37,6 +37,10 @@ python main.py
 
 前端页面可以直接打开 `frontend/index.html` 查看示例库存状态。
 
+## 发布检查
+
+公开发布前，先按 [发布前检查清单](./PUBLISH_CHECKLIST.md) 确认密钥、大文件、缓存和场景编辑器没有进入 Git。
+
 不要提交以下内容：
 
 - `.env`

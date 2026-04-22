@@ -15,11 +15,6 @@
 - `basic-peripherals.html`
 - `resource-download.html`
 - `rdk_x5_magicbox_images_index.html`
-- `openclaw_linux.html`
-- `openclaw_docker.html`
-- `openclaw_webchat.html`
-- `openclaw_security.html`
-- `nanobot_club.html`
 
 ## 二、官方图片归档
 
@@ -40,7 +35,7 @@
 
 ## 三、实拍截图
 
-根目录下以 `image-时间戳.png` 命名的文件，均为本教程写作过程中保留的实拍截图。
+根目录下以 `image-时间戳.png` 命名的文件，均为本教程使用的实拍截图。
 
 ## 四、运行时页面说明
 
@@ -53,8 +48,6 @@
 
 这些地址只有在开发板已启动、网络已连通、对应服务已运行时才有效。
 
-## 五、关于 OpenClaw 与 nanobot 资料来源的说明
+## 五、关于外部资料来源的说明
 
-`OpenClaw` 相关页面来自官方文档站，适合直接作为教程引用和归档。
-
-`nanobot_club.html` 仅作为社区整理页面归档，便于保留当时的对比材料。涉及 `nanobot` 的版本、安装方式和能力边界时，实际写作应以官方仓库 `HKUDS/nanobot` 为主，而不是以该社区站点作为唯一依据。
+本目录只保留本教程实际引用的页面和图片。涉及 OpenClaw、nanobot 或其他外部项目的版本、安装方式和能力边界时，应优先以对应项目的官方文档或官方仓库为准。

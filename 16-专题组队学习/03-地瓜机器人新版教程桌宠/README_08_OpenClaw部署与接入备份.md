@@ -1,6 +1,6 @@
 # README 06：OpenClaw 部署、接管与板端控制
 
-完成这一章后，读者应该能够在 MagicBox 上完成四件事。第一，确认 `magicclaw.service` 和 `magicclaw-buttons.service` 是否已经正常运行。第二，理解左、中、右三个物理按键分别代表什么，以及它们可以被重新映射到哪些动作。第三，知道哪些 `magicboxctl` 命令属于纯本地硬件控制，哪些命令必须先启动 ROS 语音链路。第四，知道 OpenClaw 自带后端与我们自己的 Lite 前端分别负责什么，以及网页前端应该如何访问。
+完成这一章后，读者应该能够在 MagicBox 上完成四件事。第一，确认 `magicclaw.service` 和 `magicclaw-buttons.service` 是否已经正常运行。第二，理解左、中、右三个物理按键分别代表什么，以及它们可以被重新映射到哪些动作。第三，知道哪些 `magicboxctl` 命令属于纯本地硬件控制，哪些命令必须先启动 ROS 语音链路。第四，知道 OpenClaw 自带后端与本教程提供的 Lite 前端分别负责什么，以及网页前端应该如何访问。
 
 ## 一、本章完成后的验收目标
 
@@ -9,7 +9,7 @@
 - `magicclaw.service` 处于 `active (running)`，并且 `curl http://127.0.0.1:18789/health` 能返回健康状态。
 - `magicclaw-buttons.service` 处于 `active (running)`，三个物理按键已经能够交给 MagicClaw 侧重新映射。
 - `magicboxctl buttons show`、`magicboxctl voice ...`、`magicboxctl servo ...` 这些命令都能被正确理解，不再把需要前置服务的命令当成“随时都能独立执行”。
-- 读者知道 OpenClaw 有浏览器控制相关后端，但当前稳定可用的网页入口应以我们自己的 Lite 前端为主。
+- 读者知道 OpenClaw 有浏览器控制相关后端，但当前稳定可用的网页入口应以本教程提供的 Lite 前端为主。
 
 ## 二、本章采用哪一套运行模式
 
@@ -286,7 +286,7 @@ sudo /userdata/magicclaw/runtime/bin/magicboxctl servo greet 1
 因此，本教程的结论非常明确：
 
 - 如果只是研究 OpenClaw 自带后端，关注的是 `18789` 和 `18791` 这两个接口。
-- 如果希望有一个稳定、适合课程截图、适合对话控制、适合局域网调试的网页入口，应当以我们自己的 Lite 前端为主。
+- 如果希望有一个稳定、适合课程截图、适合对话控制、适合局域网调试的网页入口，应当以本教程提供的 Lite 前端为主。
 
 ## 十二、旧仪表盘为什么不适合作为当前主入口
 
@@ -315,13 +315,13 @@ device identity required
 
 ## 十三、Lite 前端为什么是当前推荐入口
 
-当前稳定可用的网页入口是我们自己的 Lite 前端。原因很简单：它是为 MagicBox 这块板子的局域网 bring-up、教程截图和调试控制专门准备的，绕开了旧 OpenClaw 网页 bundle 在设备身份校验上的不稳定因素。
+当前稳定可用的网页入口是本教程提供的 Lite 前端。原因很简单：它是为 MagicBox 这块板子的局域网 bring-up、教程截图和调试控制专门准备的，绕开了旧 OpenClaw 网页 bundle 在设备身份校验上的不稳定因素。
 
 Lite 前端更适合做下面这些事：
 
 - 在局域网环境下直接连接板端网关。
 - 配合 `magicboxctl` 做对话式控制和排障。
-- 用于课程录屏、截图和读者复现。
+- 用于截图、演示和读者复现。
 
 本章的使用建议因此很明确：
 

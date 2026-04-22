@@ -24,7 +24,7 @@
 
 - `请把巧克力放到盘里`
 - `将菜板上的苹果放置有苹果的架子上保存`
-- `请把玻璃杯扔到地上`（我们项目支持安全交互，OpenClaw 会直接拒绝这种指令。）
+- `请把玻璃杯扔到地上`（系统支持安全交互，OpenClaw 会直接拒绝这种指令。）
 
 用户不需要记忆复杂指令格式，只需要用接近日常表达的方式下达任务，系统就会自动完成任务解析、目标理解和动作执行。
 
@@ -162,7 +162,7 @@ python scripts/download_large_assets.py
 ### 6.3 启动
 
 ```powershell
-micromamba run -n vlm_grasp311 python C:\oc\tuntunclaw\main.py
+micromamba run -n vlm_grasp311 python main.py
 ```
 
 启动后默认打开：
@@ -178,7 +178,7 @@ http://127.0.0.1:8000/
 ```text
 请把巧克力放到盘里
 将菜板上的苹果放置有苹果的架子上保存
-请把玻璃杯扔到地上（我们项目支持安全交互，OpenClaw 会直接拒绝这种指令。）
+请把玻璃杯扔到地上（系统支持安全交互，OpenClaw 会直接拒绝这种指令。）
 ```
 
 ## 7. 典型演示流程

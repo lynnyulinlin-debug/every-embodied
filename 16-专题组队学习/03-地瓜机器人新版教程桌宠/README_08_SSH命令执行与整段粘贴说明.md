@@ -14,7 +14,7 @@ sudo su -
 
 确认提示符已经切换为 root 之后，再把后续命令整段粘贴进去。
 
-第二种做法，是完全避免交互式切 shell，直接用一条 `sudo bash -lc '...'` 把整套命令包进同一个 root shell。对于教程、录课和远程协作，这通常是更推荐的写法。
+第二种做法，是完全避免交互式切 shell，直接用一条 `sudo bash -lc '...'` 把整套命令包进同一个 root shell。对于需要反复复制和远程执行的教程命令，这通常是更推荐的写法。
 
 ## 二、为什么整段粘贴会失败
 
@@ -82,7 +82,7 @@ source /userdata/magicbox/app/ros_ws/install/local_setup.bash
 ros2 launch gesture_interaction gesture_interaction.launch.py
 ```
 
-如果你是在录课、演示或需要反复复制同一条命令，推荐采用“一段式单命令”。
+如果需要反复复制同一条命令，推荐采用“一段式单命令”。
 
 ```bash
 sudo bash -lc '
@@ -139,4 +139,4 @@ sudo / root shell
 
 第一，整段粘贴失败而逐条执行成功，并不说明板子“玄学不稳定”，而往往只是 shell 切换与环境继承的问题。  
 第二，只要命令里包含 `sudo su -`、`source` 和 `ros2 launch`，就要优先考虑它们是否运行在同一个 shell 里。  
-第三，如果需要一条可重复、可复制、可录课的稳定命令，优先使用 `sudo bash -lc '...'` 这种单命令封装方式。
+第三，如果需要一条可重复、可复制的稳定命令，优先使用 `sudo bash -lc '...'` 这种单命令封装方式。

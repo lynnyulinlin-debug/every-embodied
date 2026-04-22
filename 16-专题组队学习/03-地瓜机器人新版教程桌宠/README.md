@@ -1,6 +1,6 @@
 # RDK X5 Magicbox 教程工程（从 0 到 Demo）
 
-本目录用于编写新款 `RDK X5 Magicbox` 的中文教程，目标是形成一套可直接交付的“开发板式”学习路径，并把近期热度较高的 `OpenClaw` 作为扩展平台整合进来：
+本目录是一套面向 `RDK X5 Magicbox` 的中文实践教程，目标是让读者从开箱、刷机、联网开始，逐步跑通基础外设、视觉 Demo、语音与 LLM 链路，并进一步理解如何把 `OpenClaw` 接入到板端能力中。
 
 1. 开箱与系统准备
 2. 快速入门与基础外设
@@ -12,15 +12,20 @@
 ## 1. 教程总大纲
 
 - [README_01_环境准备与刷机.md](./README_01_环境准备与刷机.md)
-- [README_02_快速入门与基础外设.md](./README_02_快速入门与基础外设.md)
-- [README_03_算法Demo_双目与手势.md](./README_03_算法Demo_双目与手势.md)
-- [README_04_算法Demo_语音与LLM.md](./README_04_算法Demo_语音与LLM.md)
-- [README_05_OpenClaw部署与接入.md](./README_05_OpenClaw部署与接入.md)
-- [README_06_排障与发布建议.md](./README_06_排障与发布建议.md)
+- [README_02_有线网口连接与登录.md](./README_02_有线网口连接与登录.md)
+- [README_03_快速入门与基础外设.md](./README_03_快速入门与基础外设.md)
+- [README_03_快速入门与基础外设补充材料.md](./README_03_快速入门与基础外设补充材料.md)
+- [README_04_算法Demo_双目与手势.md](./README_04_算法Demo_双目与手势.md)
+- [README_05_算法Demo_语音与LLM.md](./README_05_算法Demo_语音与LLM.md)
+- [README_06_OpenClaw部署与接入.md](./README_06_OpenClaw部署与接入.md)
+- [README_07_排障与发布建议.md](./README_07_排障与发布建议.md)
+- [README_08_SSH命令执行与整段粘贴说明.md](./README_08_SSH命令执行与整段粘贴说明.md)
+- [README_09_飞书控制入口.md](./README_09_飞书控制入口.md)
+- [README_10_Windows主机OpenClaw语音桥接与家庭物资助手.md](./README_10_Windows主机OpenClaw语音桥接与家庭物资助手.md)
 
-## 2. 已拉取的参考仓库（本地）
+## 2. 需要了解的参考实现
 
-已克隆到 `./repos`：
+本教程会多次引用下列官方或开源实现的能力边界。公开目录中不会放入完整依赖仓库，读者需要按章节说明自行获取或安装对应组件。
 
 - `hobot_stereonet`
 - `magicbox_gesture_interaction`
@@ -29,14 +34,7 @@
 - `openclaw`
 - `sherpa-onnx`
 
-说明：
-
-- 文档中出现的 `https://github.com/D-Robotics/magicboxaudioio` 仓库当前不存在（2026-03-06 验证）。
-- `magicbox_audio_io` 克隆时遇到 1 个 Git LFS 大文件 404（`SenseVoiceGGUF/sense-voice-small-fp16.gguf`），不影响先编写教程结构，但后续需要补齐模型下载方案。
-- `OpenClaw` 官方仓库与文档已核对：
-  - 仓库：https://github.com/openclaw/openclaw
-  - 文档：https://docs.openclaw.ai
-  - Linux 安装主线：`npm install -g openclaw@latest` 后执行 `openclaw onboard --install-daemon`
+语音链路涉及的 ASR 模型可能需要单独准备，不能简单假设克隆仓库后所有大文件都已经就绪。OpenClaw 的 Linux 安装主线是先安装 `openclaw@latest`，再执行 `openclaw onboard --install-daemon`。
 
 ## 3. 官方资料入口（已核对）
 
@@ -63,21 +61,21 @@
    - 接入 WebChat / Telegram / Feishu 等远程入口
    - 预留和本地 ROS 动作、灯光、语音链路的桥接点
 
-这样可以避免把 `OpenClaw` 和板端原生 ROS demo 混写，后续扩写时层次更清楚。
+这样可以避免把 `OpenClaw` 和板端原生 ROS demo 混写，读者也能更清楚地区分“原厂能力验证”和“平台扩展接入”。
 
-## 5. 建议交付物结构
+## 5. 学完后应能完成什么
 
-- 阶段 1（本轮完成）：教程大纲 + 章节拆分 + 参考仓库落地
-- 阶段 2（下一轮可继续）：
-  - 为每个章节补齐实机截图位
-  - 每个 Demo 补齐“预期现象 / 失败现象 / 回滚步骤”
-  - 加入一键启动脚本（可选）
-  - 增加 OpenClaw 与本地 ROS/脚本动作桥接示例
+读完并完成本专题后，读者应当能够：
 
-## 6. 版本信息
+- 完成 Magicbox 的刷机、联网和 SSH 登录；
+- 跑通按钮、灯光、舵机、双目、手势、语音和 LLM 的基础验证；
+- 识别每个 Demo 的预期现象、常见失败现象和基本回滚方式；
+- 理解 OpenClaw Gateway 与本地 ROS、脚本动作之间的桥接位置；
+- 判断哪些文件可以公开提交，哪些模型、缓存、日志和临时产物不应进入仓库。
 
-- 文档抓取时间：2026-03-06
-- 本地 PDF：`d_robotics_rdk_x5_magicbox_zh_v1.0.pdf`（7 页）
-- 在线文档最近更新时间（页面显示）：
-  - 核心章节多为 `2026-03-05`
-  - FAQ/已知问题/更新日志/技术支持为 `2026-03-06`
+## 6. 本地资料
+
+- 本地 PDF：`d_robotics_rdk_x5_magicbox_zh_v1.0.pdf`
+- 官方页面归档：`assets/official_pages/`
+- 官方图片归档：`assets/official_images/`
+- 实拍截图：`assets/image-*.png`

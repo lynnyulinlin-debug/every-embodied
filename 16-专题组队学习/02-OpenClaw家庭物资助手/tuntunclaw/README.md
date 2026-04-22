@@ -13,6 +13,30 @@
 - `requirements-py311.txt`
 - `.env.example`
 
+## 本地运行
+
+先复制环境变量样例：
+
+```bash
+cp .env.example .env
+```
+
+然后按本机飞书应用和多维表格信息填写 `.env`。不要把 `.env` 提交到仓库。
+
+安装 Python 依赖：
+
+```bash
+python -m pip install -r requirements-py311.txt
+```
+
+检查环境变量是否齐全：
+
+```bash
+python main.py
+```
+
+前端页面可以直接打开 `frontend/index.html` 查看示例库存状态。
+
 不要提交以下内容：
 
 - `.env`

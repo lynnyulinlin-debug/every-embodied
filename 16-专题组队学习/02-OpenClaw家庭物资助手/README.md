@@ -13,6 +13,7 @@
 ## 目录建议
 
 - `README_01_项目目标与范围.md`
+- `README_01_项目目标与范围.md`
 - `README_02_OpenClaw与飞书接入.md`
 - `README_03_库存与多维表格同步.md`
 - `README_04_前端展示与发布清单.md`

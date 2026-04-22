@@ -13,6 +13,7 @@
 ## 目录建议
 
 - `README_01_环境准备与依赖说明.md`
+- `README_01_环境准备与依赖说明.md`
 - `README_02_OpenClaw接入与控制入口.md`
 - `README_03_语音按钮灯效与桌宠流程.md`
 - `README_04_发布清单与忽略规则.md`

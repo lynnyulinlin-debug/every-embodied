@@ -37,11 +37,12 @@ const els = {
 };
 
 const homeTitleLines = ["从 0 到 1，", "走进具身智能。"];
+const GITHUB_REPO_URL = "https://github.com/datawhalechina/every-embodied";
 
 const homeDemos = [
   {
     title: "项目快速入门",
-    subtitle: "基于 mujoco 一键了解项目基础",
+    subtitle: "基于 Mujoco 一键了解项目基础",
     media: "assets/quick_start.gif",
     doc: "examples/README.md",
   },
@@ -131,7 +132,7 @@ const homeModules = [
         doc: "02-机器人基础和控制、手眼协调/02机器人运动学与 DH 参数.md",
       },
       {
-        title: "VLA 相关总结综述",
+        title: "VLA 综述",
         copy: "理解视觉语言动作模型如何连接感知与控制。",
         image: "assets/libero.gif",
         doc: "06-策略抓取或抓取VLA/01VLA相关总结综述.md",
@@ -208,10 +209,6 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
-function docHash(id, anchor = "") {
-  return `#/doc/${id}${anchor ? `?anchor=${encodeURIComponent(anchor)}` : ""}`;
-}
-
 function idFromRelPath(relPath) {
   return btoa(unescape(encodeURIComponent(relPath)))
     .replace(/\+/g, "-")
@@ -219,8 +216,20 @@ function idFromRelPath(relPath) {
     .replace(/=+$/g, "");
 }
 
-function rawHref(relPath) {
-  return `/raw/${idFromRelPath(relPath)}`;
+function encodePathForUrl(relPath) {
+  return relPath
+    .replace(/\\/g, "/")
+    .split("/")
+    .map((segment) => encodeURIComponent(segment))
+    .join("/");
+}
+
+function fileHref(relPath) {
+  return `files/${encodePathForUrl(relPath)}`;
+}
+
+function docHash(id, anchor = "") {
+  return `#/doc/${id}${anchor ? `?anchor=${encodeURIComponent(anchor)}` : ""}`;
 }
 
 function setIconHref(selector, href) {
@@ -232,8 +241,8 @@ function setIconHref(selector, href) {
 
 function formatCompactNumber(value) {
   if (!Number.isFinite(value)) return "--";
-  if (value >= 1000000) return `${(value / 1000000).toFixed(1).replace(/\\.0$/, "")}m`;
-  if (value >= 1000) return `${(value / 1000).toFixed(1).replace(/\\.0$/, "")}k`;
+  if (value >= 1000000) return `${(value / 1000000).toFixed(1).replace(/\.0$/, "")}m`;
+  if (value >= 1000) return `${(value / 1000).toFixed(1).replace(/\.0$/, "")}k`;
   return String(value);
 }
 
@@ -246,10 +255,12 @@ function getRoute() {
   if (hash === "#/" || hash === "#") {
     return { type: "home" };
   }
+
   const homeMatch = hash.match(/^#\/home(?:\/([^?]+))?$/);
   if (homeMatch) {
     return { type: "home", anchor: homeMatch[1] || "" };
   }
+
   if (hash === "#homeDemos" || hash === "#homePaths" || /^#module-/.test(hash)) {
     return { type: "home", anchor: hash.slice(1) };
   }
@@ -299,12 +310,19 @@ function openSidebar() {
   els.scrim.classList.add("open");
 }
 
+async function fetchJson(relPath) {
+  const response = await fetch(relPath, { cache: "no-cache" });
+  if (!response.ok) {
+    throw new Error(`读取失败: ${relPath}`);
+  }
+  return response.json();
+}
+
 async function fetchCatalog() {
   els.catalogStatus.textContent = "扫描 Markdown 中";
-  const response = await fetch("/api/docs");
-  if (!response.ok) throw new Error("目录读取失败");
-  state.catalog = await response.json();
+  state.catalog = await fetchJson("data/catalog.json");
   state.flatDocs = state.catalog.docs;
+
   if (state.catalog.project?.logo) {
     els.brandLogo.src = state.catalog.project.logo;
   }
@@ -312,6 +330,7 @@ async function fetchCatalog() {
     setIconHref('link[rel="icon"]', state.catalog.project.favicon);
     setIconHref('link[rel="apple-touch-icon"]', state.catalog.project.favicon);
   }
+
   els.topMeta.textContent = `${state.catalog.stats.groups} 组 · ${state.catalog.stats.docs} 篇文档`;
   els.catalogStatus.textContent = `已自动识别 ${state.catalog.stats.docs} 篇`;
   renderNav();
@@ -321,9 +340,7 @@ async function fetchCatalog() {
 
 async function fetchGithubStats() {
   try {
-    const response = await fetch("/api/github");
-    if (!response.ok) throw new Error("GitHub stats unavailable");
-    const stats = await response.json();
+    const stats = await fetchJson("data/github.json");
     els.starCount.textContent = formatCompactNumber(Number(stats.stars));
   } catch {
     els.starCount.textContent = "--";
@@ -345,7 +362,7 @@ function renderNav() {
   els.navTree.innerHTML =
     groups
       .map((group) => {
-        const isOpen = keyword || state.openGroups.has(group.key);
+        const isOpen = Boolean(keyword) || state.openGroups.has(group.key);
         return `
           <section class="nav-group">
             <button class="nav-group-toggle" type="button" data-group="${escapeHtml(group.key)}" aria-expanded="${isOpen ? "true" : "false"}">
@@ -464,7 +481,7 @@ function renderHome() {
       return `
         <a class="home-demo-card" href="${doc ? docHash(doc.id) : "#/book"}">
           <span class="home-demo-media">
-            <img src="${rawHref(demo.media)}" alt="${escapeHtml(demo.title)}" loading="lazy" />
+            <img src="${fileHref(demo.media)}" alt="${escapeHtml(demo.title)}" loading="lazy" />
           </span>
           <span class="home-demo-copy">
             <strong>${escapeHtml(demo.title)}</strong>
@@ -492,7 +509,7 @@ function renderHome() {
                 return `
                   <a class="home-module-card" href="${doc ? docHash(doc.id) : "#/book?catalog=1"}">
                     <span class="home-module-media">
-                      <img src="${rawHref(card.image)}" alt="${escapeHtml(card.title)}" loading="lazy" />
+                      <img src="${fileHref(card.image)}" alt="${escapeHtml(card.title)}" loading="lazy" />
                     </span>
                     <span class="home-module-card-body">
                       <small>${String(index + 1).padStart(2, "0")}</small>
@@ -573,9 +590,11 @@ async function loadDoc(id, anchor = "", options = {}) {
   setHomeTitleText();
   setMode("book");
   els.article.innerHTML = '<div class="loading">正在加载 Markdown 内容。</div>';
-  const response = await fetch(`/api/doc/${id}`);
+
+  const response = await fetch(`data/docs/${id}.json`, { cache: "no-cache" });
   if (!response.ok) {
-    els.article.innerHTML = '<div class="error-box">这篇文档不在目录中，可能是英文文档、资源说明或已被移动。</div>';
+    els.article.innerHTML =
+      '<div class="error-box">这篇文档不在目录中，可能是英文文档、资源说明或已被移动。</div>';
     return;
   }
 

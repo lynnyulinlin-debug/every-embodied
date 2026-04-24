@@ -1,0 +1,17 @@
+.env
+.cache/
+__pycache__/
+temp/
+trash/
+*.pt
+*.tar
+*.zip
+*.img
+*.exe
+*.log
+mask_*.png
+scene_layout_editor.py
+SCENE_LAYOUT_EDITOR_README.md
+openclaw_magicbox/
+repos/
+related_downloads/

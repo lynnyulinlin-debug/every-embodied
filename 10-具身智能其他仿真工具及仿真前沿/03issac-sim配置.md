@@ -1,465 +1,176 @@
-# 🖥️ NVIDIA Isaac Sim 配置指南
+# NVIDIA Isaac Sim 配置指南
 
-## 📋 目录
-- [简介](#简介)
-- [系统要求](#系统要求)
-- [安装方法](#安装方法)
-  - [工作站安装](#工作站安装)
-  - [容器安装](#容器安装)
-  - [云部署](#云部署)
-- [Python环境配置](#Python环境配置)
-- [ROS/ROS2集成](#ROS/ROS2集成)
-- [快速入门](#快速入门)
-- [常见问题](#常见问题)
-- [参考资源](#参考资源)
+NVIDIA Isaac Sim 是基于 NVIDIA Omniverse 的高保真机器人仿真平台，适合用于传感器仿真、ROS/ROS2 集成、合成数据生成、复杂机器人系统验证和 Sim2Real 相关实验。
 
-## 📖 简介
+本教程介绍 Isaac Sim 的基础安装方式、Python 环境配置、ROS/ROS2 集成、快速入门和常见问题。本文档此前存在整段内容重复，网页端目录会出现重复标题；本版已清理为单份内容。
 
-NVIDIA Isaac Sim 是一个高性能机器人仿真平台，基于NVIDIA Omniverse技术构建。它提供了真实感渲染、精确物理引擎、传感器模拟和多种机器人控制接口，是开发、测试和训练机器人算法的理想工具。
-
-本教程将指导完成Isaac Sim的安装与基本配置，帮助快速上手这一强大的仿真平台。（由于笔者服务器问题，图片暂时无法显示，请谅解）
-
-## 💻 系统要求
+## 系统要求
 
 ### 硬件要求
 
-- **CPU**：Intel Core i7/i9 或 AMD Ryzen 7/9 (建议8核或更高)
-- **GPU**：
-  - 最低要求：NVIDIA GeForce RTX 2070
-  - 推荐配置：NVIDIA GeForce RTX 3080/3090 或 NVIDIA RTX A4000/A5000/A6000
-- **内存**：32GB RAM (最低16GB)
-- **存储**：至少50GB可用空间，推荐SSD
+- CPU：Intel Core i7/i9 或 AMD Ryzen 7/9，建议 8 核或更高。
+- GPU：最低建议 NVIDIA GeForce RTX 2070，推荐 RTX 3080/3090 或 RTX A4000/A5000/A6000。
+- 内存：建议 32GB RAM，最低 16GB。
+- 存储：至少 50GB 可用空间，推荐 SSD。
 
 ### 软件要求
 
-- **操作系统**：
-  - Windows 10/11 (64位) 20H2或更高版本
-  - Ubuntu 20.04 LTS或22.04 LTS
-- **显卡驱动**：
-  - Windows: 驱动版本 531.18 或更高
-  - Linux: 驱动版本 531.18 或更高
-- **CUDA Toolkit**：建议安装最新的CUDA版本
+- 操作系统：Windows 10/11 64 位，或 Ubuntu 20.04/22.04 LTS。
+- 显卡驱动：建议使用 NVIDIA 官方推荐驱动版本。
+- CUDA Toolkit：根据 Isaac Sim 版本和显卡驱动要求选择匹配版本。
 
-## 🔧 安装方法
+## 安装方式
 
-Isaac Sim提供多种安装方式，包括工作站安装、容器安装和云部署。根据需求选择适合的安装方式。
+Isaac Sim 常见安装方式包括本地工作站安装、容器安装和云端部署。不同版本的入口可能会随 NVIDIA 官方发布方式变化，实际安装时建议以官方文档为准。
 
 ### 工作站安装
 
-1. **下载Omniverse Launcher**
-   - 访问[NVIDIA Omniverse下载页面](https://www.nvidia.com/en-us/omniverse/download/)
-   - 填写表格并下载适合操作系统的Omniverse Launcher
+1. 访问 NVIDIA Isaac Sim 官方文档或 Omniverse 下载页面。
+2. 根据当前官方推荐方式下载 Isaac Sim。
+3. 登录 NVIDIA 账户并完成安装。
+4. 启动 Isaac Sim，等待首次缓存和扩展初始化完成。
 
-2. **安装Omniverse Launcher**
-   - 运行下载的安装程序
-   - 按照安装向导完成安装
+参考入口：
 
-3. **通过Launcher安装Isaac Sim**
-   - 打开Omniverse Launcher
-   - 登录NVIDIA账户（需要创建一个免费账户）
-   - 在"Exchange"选项卡中搜索"Isaac Sim"
-   - 点击"安装"按钮
-   - 完成后，可以从Launcher的"Library"选项卡启动Isaac Sim
+- [NVIDIA Isaac Sim 官方文档](https://docs.isaacsim.omniverse.nvidia.com/)
+- [NVIDIA Omniverse 官方文档](https://docs.omniverse.nvidia.com/)
 
 ### 容器安装
 
-对于希望在容器环境中运行Isaac Sim的用户，NVIDIA提供了Docker容器支持：
+适合希望在 Linux 服务器或可复现环境中运行 Isaac Sim 的用户。
 
-1. **安装Docker和NVIDIA Container Toolkit**
-   ```bash
-   # 安装Docker
-   sudo apt-get update
-   sudo apt-get install docker-ce docker-ce-cli containerd.io
-   
-   # 安装NVIDIA Container Toolkit
-   distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-   curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
-   curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-   sudo apt-get update
-   sudo apt-get install -y nvidia-container-toolkit
-   sudo systemctl restart docker
-   ```
+```bash
+# 安装 Docker 后，继续安装 NVIDIA Container Toolkit
+sudo apt-get update
+sudo apt-get install -y nvidia-container-toolkit
+sudo systemctl restart docker
 
-2. **拉取Isaac Sim容器**
-   ```bash
-   docker pull nvcr.io/nvidia/isaac-sim:latest
-   ```
+# 拉取 Isaac Sim 容器镜像，具体 tag 以官方文档为准
+docker pull nvcr.io/nvidia/isaac-sim:latest
+```
 
-3. **运行Isaac Sim容器**
-   ```bash
-   docker run --gpus all -e "ACCEPT_EULA=Y" --rm -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY nvcr.io/nvidia/isaac-sim:latest
-   ```
+运行示例：
+
+```bash
+docker run --gpus all -e "ACCEPT_EULA=Y" --rm -it \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  -e DISPLAY=$DISPLAY \
+  nvcr.io/nvidia/isaac-sim:latest
+```
+
+如果在远程服务器上使用，通常还需要配置 X11、VNC、NICE DCV 或 WebRTC 远程访问。
 
 ### 云部署
 
-Isaac Sim支持在主要云平台上部署，包括AWS、Azure、Google Cloud等。以AWS为例：
+Isaac Sim 可以部署在支持 NVIDIA GPU 的云主机上。建议选择具备 NVIDIA GPU、足够显存和稳定远程桌面能力的实例。
 
-1. **创建EC2实例**
-   - 选择一个支持NVIDIA GPU的实例类型（如g4dn.xlarge）
-   - 选择包含NVIDIA驱动的AMI
+基本流程：
 
-2. **安装必要组件**
-   - 更新系统并安装必要的包
-   - 配置X11转发或使用NICE DCV进行远程访问
+1. 创建支持 NVIDIA GPU 的云实例。
+2. 安装或确认 NVIDIA 驱动。
+3. 配置远程桌面、VNC、NICE DCV 或 WebRTC。
+4. 按工作站或容器方式安装 Isaac Sim。
 
-3. **按照工作站安装步骤安装Isaac Sim**
+本仓库中也提供了更完整的云端部署示例：
 
-## 🐍 Python环境配置
+- [阿里云部署 Isaac Lab + GR00T 完整教程](阿里云部署%20Isaac%20Lab%20%2B%20GR00T%20完整教程.md)
 
-Isaac Sim包含一个内置的Python环境，但也可以配置自己的Python环境与Isaac Sim交互：
+## Python 环境配置
 
-1. **创建Python虚拟环境**
-   ```bash
-   conda create -n isaac-sim python=3.9
-   conda activate isaac-sim
-   ```
+Isaac Sim 通常自带 Python 环境。简单脚本可以直接使用 Isaac Sim 附带的 Python；如果要与外部训练代码联动，可以创建独立虚拟环境，并显式配置 Isaac Sim 的 Python 路径。
 
-2. **安装必要的包**
-   ```bash
-   pip install torch torchvision numpy matplotlib
-   ```
+示例：
 
-3. **配置Isaac Sim的Python路径**
-   - 添加Isaac Sim的Python路径到环境变量中
-   - 或在Python脚本中添加以下代码：
-     ```python
-     import sys
-     sys.path.append('/path/to/isaac-sim/python')
-     ```
+```bash
+conda create -n isaac-sim python=3.9
+conda activate isaac-sim
+pip install torch torchvision numpy matplotlib
+```
 
-## 🤖 ROS/ROS2集成
+在脚本中临时加入 Isaac Sim Python 路径：
 
-Isaac Sim提供与ROS和ROS2的集成，使可以在仿真环境中测试ROS应用：
+```python
+import sys
+sys.path.append("/path/to/isaac-sim/python")
+```
 
-### ROS2集成（支持Windows和Linux）
+实际路径应替换为本机 Isaac Sim 安装目录。
 
-1. **安装ROS2**
-   - 按照[ROS2官方安装指南](https://docs.ros.org/en/galactic/Installation.html)安装ROS2
+## ROS/ROS2 集成
 
-2. **安装Isaac Sim的ROS2桥接器**
-   - 在Isaac Sim中，导航至扩展管理器（Window > Extensions）
-   - 搜索"ROS2"并安装"Omniverse Isaac ROS2 Bridge"扩展
+Isaac Sim 支持 ROS 和 ROS2 集成，适合在仿真环境中测试机器人系统节点、传感器消息和控制链路。
 
-3. **验证安装**
-   - 启动Isaac Sim
-   - 在菜单中选择Isaac Examples > ROS > ROS2 > Simple Publish
-   - 运行示例以验证ROS2集成是否正常工作
+### ROS2 集成
 
-### ROS集成（仅Linux）
+1. 安装 ROS2。
+2. 在 Isaac Sim 中打开扩展管理器。
+3. 搜索并启用 Omniverse Isaac ROS2 Bridge。
+4. 运行 Isaac Examples 中的 ROS2 示例，验证消息发布和订阅是否正常。
 
-1. **安装ROS**
-   - 按照[ROS官方安装指南](http://wiki.ros.org/noetic/Installation)安装ROS
+### ROS 集成
 
-2. **安装Isaac Sim的ROS桥接器**
-   - 在Isaac Sim中，导航至扩展管理器
-   - 搜索"ROS"并安装"Omniverse Isaac ROS Bridge"扩展
+ROS 集成主要面向 Linux 环境。
 
-3. **验证安装**
-   - 启动Isaac Sim
-   - 在菜单中选择Isaac Examples > ROS > Simple Publish
-   - 运行示例以验证ROS集成是否正常工作
+1. 安装 ROS。
+2. 在 Isaac Sim 中启用 Omniverse Isaac ROS Bridge。
+3. 运行 ROS 示例并检查话题输出。
 
-## 🚀 快速入门
+## 快速入门
 
-### 启动Isaac Sim
+### 启动 Isaac Sim
 
-1. 通过Omniverse Launcher启动Isaac Sim
-2. 首次启动时，系统可能会提示安装额外的组件
-3. 启动完成后，将看到Isaac Sim的主界面
+1. 通过本地安装入口或容器启动 Isaac Sim。
+2. 等待扩展加载完成。
+3. 打开示例场景或新建空场景。
 
 ### 探索基本功能
 
-1. **用户界面概览**
-   - 左侧：舞台树（Stage Tree）显示场景层次结构
-   - 中间：视口（Viewport）显示3D场景
-   - 右侧：属性面板（Property Panel）显示选中对象的属性
-   - 底部：时间轴和控制面板
+1. 查看 Stage Tree、Viewport、Property Panel 和时间轴。
+2. 添加基础几何体，例如 Cube。
+3. 添加机器人模型，例如 UR10 或 Franka。
+4. 点击 Play 运行仿真。
+5. 尝试添加相机、深度传感器或 ROS2 Bridge。
 
-2. **添加简单对象**
-   - 点击Create > Mesh > Cube添加一个立方体
-   - 使用控制柄调整位置、旋转和缩放
+### 推荐学习顺序
 
-3. **添加机器人**
-   - 点击Isaac Examples > Robots查看可用机器人
-   - 选择一个机器人（如UR10）添加到场景中
+1. 完成 Isaac Sim 官方 Quickstart。
+2. 运行一个机器人示例。
+3. 学习机器人导入、关节控制和传感器配置。
+4. 学习 Python API 和 OmniGraph。
+5. 再进入 Isaac Lab、GR00T 或合成数据生成流程。
 
-4. **运行模拟**
-   - 点击底部工具栏中的Play按钮开始模拟
-   - 使用控制面板调整模拟参数
+## 常见问题
 
-### 学习推荐路径
+### Isaac Sim 无法启动或崩溃
 
-1. 完成"Quickstart with Isaac Sim"和"Quickstart with a Robot"教程
-2. 探索Isaac Examples中的示例场景
-3. 了解机器人导入和配置
-4. 学习传感器添加和配置
-5. 进阶学习Python API和OmniGraph节点开发
+- 检查 GPU 是否满足要求。
+- 检查 NVIDIA 驱动是否与 Isaac Sim 版本匹配。
+- 降低渲染质量或关闭不必要扩展。
+- 使用 debug 日志定位扩展加载问题。
 
-## ❓ 常见问题
+### 渲染性能较差
 
-### 1. Isaac Sim崩溃或无法启动
+- 降低场景复杂度。
+- 降低渲染质量设置。
+- 关闭不必要的传感器。
+- 不需要真实感渲染时关闭实时光线追踪。
 
-- 确保GPU驱动是最新的
-- 检查系统是否满足最低硬件要求
-- 尝试重新安装Isaac Sim
-- 在启动时使用`--/log/level=debug`参数查看详细日志
+### 机器人导入失败
 
-### 2. 性能问题
+- 检查 URDF/USD 文件格式。
+- 检查 mesh 路径是否正确。
+- 使用 Import Wizard 查看错误日志。
+- 注意关节轴、惯量、碰撞体和尺度单位。
 
-- 减少场景复杂度
-- 降低渲染质量设置
-- 关闭不必要的传感器
-- 禁用实时光线追踪（如不需要）
+### Python 脚本无法运行
 
-### 3. 机器人导入问题
+- 确认 Python 版本与 Isaac Sim 版本兼容。
+- 使用 Isaac Sim 自带 Python 先验证最小示例。
+- 检查 `PYTHONPATH` 和 Isaac Sim 安装路径。
 
-- 确保URDF文件格式正确
-- 检查模型文件路径是否正确
-- 使用Import Wizard并检查导入日志中的错误
+## 参考资源
 
-### 4. Python脚本执行错误
-
-- 确保Python版本兼容（建议Python 3.7-3.9）
-- 检查Omniverse和Isaac Sim的Python路径设置
-- 查看控制台输出的错误信息
-
-## 📚 参考资源
-
-- [NVIDIA Isaac Sim官方文档](https://docs.isaacsim.omniverse.nvidia.com/)
-- [NVIDIA Omniverse官方文档](https://docs.omniverse.nvidia.com/)
-- [Isaac Sim教程视频集](https://www.youtube.com/playlist?list=PL3jK4xNnlCVfYZlv1B-eCcz1zY5WJqWTH)
-# 🖥️ NVIDIA Isaac Sim 配置指南
-
-## 📋 目录
-- [简介](#简介)
-- [系统要求](#系统要求)
-- [安装方法](#安装方法)
-  - [工作站安装](#工作站安装)
-  - [容器安装](#容器安装)
-  - [云部署](#云部署)
-- [Python环境配置](#Python环境配置)
-- [ROS/ROS2集成](#ROS/ROS2集成)
-- [快速入门](#快速入门)
-- [常见问题](#常见问题)
-- [参考资源](#参考资源)
-
-## 📖 简介
-
-NVIDIA Isaac Sim 是一个高性能机器人仿真平台，基于NVIDIA Omniverse技术构建。它提供了真实感渲染、精确物理引擎、传感器模拟和多种机器人控制接口，是开发、测试和训练机器人算法的理想工具。
-
-本教程将指导完成Isaac Sim的安装与基本配置，帮助快速上手这一强大的仿真平台。（由于笔者服务器问题，图片暂时无法显示，请谅解）
-
-## 💻 系统要求
-
-### 硬件要求
-
-- **CPU**：Intel Core i7/i9 或 AMD Ryzen 7/9 (建议8核或更高)
-- **GPU**：
-  - 最低要求：NVIDIA GeForce RTX 2070
-  - 推荐配置：NVIDIA GeForce RTX 3080/3090 或 NVIDIA RTX A4000/A5000/A6000
-- **内存**：32GB RAM (最低16GB)
-- **存储**：至少50GB可用空间，推荐SSD
-
-### 软件要求
-
-- **操作系统**：
-  - Windows 10/11 (64位) 20H2或更高版本
-  - Ubuntu 20.04 LTS或22.04 LTS
-- **显卡驱动**：
-  - Windows: 驱动版本 531.18 或更高
-  - Linux: 驱动版本 531.18 或更高
-- **CUDA Toolkit**：建议安装最新的CUDA版本
-
-## 🔧 安装方法
-
-Isaac Sim提供多种安装方式，包括工作站安装、容器安装和云部署。根据需求选择适合的安装方式。
-
-### 工作站安装
-
-1. **下载Omniverse Launcher**
-   - 访问[NVIDIA Omniverse下载页面](https://www.nvidia.com/en-us/omniverse/download/)
-   - 填写表格并下载适合操作系统的Omniverse Launcher
-
-2. **安装Omniverse Launcher**
-   - 运行下载的安装程序
-   - 按照安装向导完成安装
-
-3. **通过Launcher安装Isaac Sim**
-   - 打开Omniverse Launcher
-   - 登录NVIDIA账户（需要创建一个免费账户）
-   - 在"Exchange"选项卡中搜索"Isaac Sim"
-   - 点击"安装"按钮
-   - 完成后，可以从Launcher的"Library"选项卡启动Isaac Sim
-
-### 容器安装
-
-对于希望在容器环境中运行Isaac Sim的用户，NVIDIA提供了Docker容器支持：
-
-1. **安装Docker和NVIDIA Container Toolkit**
-   ```bash
-   # 安装Docker
-   sudo apt-get update
-   sudo apt-get install docker-ce docker-ce-cli containerd.io
-   
-   # 安装NVIDIA Container Toolkit
-   distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-   curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
-   curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-   sudo apt-get update
-   sudo apt-get install -y nvidia-container-toolkit
-   sudo systemctl restart docker
-   ```
-
-2. **拉取Isaac Sim容器**
-   ```bash
-   docker pull nvcr.io/nvidia/isaac-sim:latest
-   ```
-
-3. **运行Isaac Sim容器**
-   ```bash
-   docker run --gpus all -e "ACCEPT_EULA=Y" --rm -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY nvcr.io/nvidia/isaac-sim:latest
-   ```
-
-### 云部署
-
-Isaac Sim支持在主要云平台上部署，包括AWS、Azure、Google Cloud等。以AWS为例：
-
-1. **创建EC2实例**
-   - 选择一个支持NVIDIA GPU的实例类型（如g4dn.xlarge）
-   - 选择包含NVIDIA驱动的AMI
-
-2. **安装必要组件**
-   - 更新系统并安装必要的包
-   - 配置X11转发或使用NICE DCV进行远程访问
-
-3. **按照工作站安装步骤安装Isaac Sim**
-
-## 🐍 Python环境配置
-
-Isaac Sim包含一个内置的Python环境，但也可以配置自己的Python环境与Isaac Sim交互：
-
-1. **创建Python虚拟环境**
-   ```bash
-   conda create -n isaac-sim python=3.9
-   conda activate isaac-sim
-   ```
-
-2. **安装必要的包**
-   ```bash
-   pip install torch torchvision numpy matplotlib
-   ```
-
-3. **配置Isaac Sim的Python路径**
-   - 添加Isaac Sim的Python路径到环境变量中
-   - 或在Python脚本中添加以下代码：
-     ```python
-     import sys
-     sys.path.append('/path/to/isaac-sim/python')
-     ```
-
-## 🤖 ROS/ROS2集成
-
-Isaac Sim提供与ROS和ROS2的集成，使可以在仿真环境中测试ROS应用：
-
-### ROS2集成（支持Windows和Linux）
-
-1. **安装ROS2**
-   - 按照[ROS2官方安装指南](https://docs.ros.org/en/galactic/Installation.html)安装ROS2
-
-2. **安装Isaac Sim的ROS2桥接器**
-   - 在Isaac Sim中，导航至扩展管理器（Window > Extensions）
-   - 搜索"ROS2"并安装"Omniverse Isaac ROS2 Bridge"扩展
-
-3. **验证安装**
-   - 启动Isaac Sim
-   - 在菜单中选择Isaac Examples > ROS > ROS2 > Simple Publish
-   - 运行示例以验证ROS2集成是否正常工作
-
-### ROS集成（仅Linux）
-
-1. **安装ROS**
-   - 按照[ROS官方安装指南](http://wiki.ros.org/noetic/Installation)安装ROS
-
-2. **安装Isaac Sim的ROS桥接器**
-   - 在Isaac Sim中，导航至扩展管理器
-   - 搜索"ROS"并安装"Omniverse Isaac ROS Bridge"扩展
-
-3. **验证安装**
-   - 启动Isaac Sim
-   - 在菜单中选择Isaac Examples > ROS > Simple Publish
-   - 运行示例以验证ROS集成是否正常工作
-
-## 🚀 快速入门
-
-### 启动Isaac Sim
-
-1. 通过Omniverse Launcher启动Isaac Sim
-2. 首次启动时，系统可能会提示安装额外的组件
-3. 启动完成后，将看到Isaac Sim的主界面
-
-### 探索基本功能
-
-1. **用户界面概览**
-   - 左侧：舞台树（Stage Tree）显示场景层次结构
-   - 中间：视口（Viewport）显示3D场景
-   - 右侧：属性面板（Property Panel）显示选中对象的属性
-   - 底部：时间轴和控制面板
-
-2. **添加简单对象**
-   - 点击Create > Mesh > Cube添加一个立方体
-   - 使用控制柄调整位置、旋转和缩放
-
-3. **添加机器人**
-   - 点击Isaac Examples > Robots查看可用机器人
-   - 选择一个机器人（如UR10）添加到场景中
-
-4. **运行模拟**
-   - 点击底部工具栏中的Play按钮开始模拟
-   - 使用控制面板调整模拟参数
-
-### 学习推荐路径
-
-1. 完成"Quickstart with Isaac Sim"和"Quickstart with a Robot"教程
-2. 探索Isaac Examples中的示例场景
-3. 了解机器人导入和配置
-4. 学习传感器添加和配置
-5. 进阶学习Python API和OmniGraph节点开发
-
-## ❓ 常见问题
-
-### 1. Isaac Sim崩溃或无法启动
-
-- 确保GPU驱动是最新的
-- 检查系统是否满足最低硬件要求
-- 尝试重新安装Isaac Sim
-- 在启动时使用`--/log/level=debug`参数查看详细日志
-
-### 2. 性能问题
-
-- 减少场景复杂度
-- 降低渲染质量设置
-- 关闭不必要的传感器
-- 禁用实时光线追踪（如不需要）
-
-### 3. 机器人导入问题
-
-- 确保URDF文件格式正确
-- 检查模型文件路径是否正确
-- 使用Import Wizard并检查导入日志中的错误
-
-### 4. Python脚本执行错误
-
-- 确保Python版本兼容（建议Python 3.7-3.9）
-- 检查Omniverse和Isaac Sim的Python路径设置
-- 查看控制台输出的错误信息
-
-## 📚 参考资源
-
-- [NVIDIA Isaac Sim官方文档](https://docs.isaacsim.omniverse.nvidia.com/)
-- [NVIDIA Omniverse官方文档](https://docs.omniverse.nvidia.com/)
-- [Isaac Sim教程视频集](https://www.youtube.com/playlist?list=PL3jK4xNnlCVfYZlv1B-eCcz1zY5WJqWTH)
-- [NVIDIA开发者论坛](https://forums.developer.nvidia.com/c/omniverse/isaac-sim/69)
-
----
-
-本指南提供了NVIDIA Isaac Sim的基本配置和入门信息。随着对平台的深入了解，可以探索更多高级功能，如传感器仿真、机器人控制、强化学习和合成数据生成等。祝在Isaac Sim中有一个愉快的仿真体验！
+- [NVIDIA Isaac Sim 官方文档](https://docs.isaacsim.omniverse.nvidia.com/)
+- [NVIDIA Omniverse 官方文档](https://docs.omniverse.nvidia.com/)
+- [Isaac Sim 教程视频集](https://www.youtube.com/playlist?list=PL3jK4xNnlCVfYZlv1B-eCcz1zY5WJqWTH)
+- [NVIDIA 开发者论坛 Isaac Sim 板块](https://forums.developer.nvidia.com/c/omniverse/isaac-sim/69)

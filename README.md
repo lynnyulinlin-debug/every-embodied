@@ -14,7 +14,7 @@
   # Every-Embodied : Zero to Hero in Embodied AI
 
   <p align="center">
-    📌 <a href="https://datawhale-eai.feishu.cn/wiki/QvxQwV2Qyij1NakV9IdcjTl1nJd">组队学习文档 (Team Learning)</a> · ✨ <a href="#learning-map">学习地图 (Learning Map)</a> · 🤖 <a href="#sota">前沿复现 (SOTA)</a>
+    📌 <a href="https://datawhale-eai.feishu.cn/wiki/QvxQwV2Qyij1NakV9IdcjTl1nJd">组队学习文档 (Team Learning)</a> · ✨ <a href="#learning-map">学习地图 (Learning Map)</a> · 🤖 <a href="#sota">前沿复现 (SOTA)</a> · 📖 <a href="https://datawhalechina.github.io/every-embodied/zh-cn/" target="_blank">在线阅读</a>
   </p>
 
   <p align="center">
@@ -65,6 +65,7 @@
   python examples/01_hello_every_embodied_mujoco.py
   ```
   详细说明请见：`examples/README.md`
+
 
 
   <br>

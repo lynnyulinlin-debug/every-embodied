@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node web/server.js"
+    "start": "node web/server.js",
+    "build:pages": "node scripts/build-pages.js"
   },
   "dependencies": {
     "cheerio": "^1.1.2",
